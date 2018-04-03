@@ -1,0 +1,28 @@
+@import 'buttons';
+@import 'components';
+@import 'for';
+@import 'form';
+@import 'general';
+@import 'generics';
+@import 'variables';
+
+* {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-decoration: none;
+}
+
+*, *:active, *:hover {
+    outline: none !important;
+}
+
+body {
+    color: @text-color;
+    font-size: @font-size-base;
+    line-height: 16px;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+}

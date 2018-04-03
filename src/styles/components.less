@@ -1,0 +1,30 @@
+#section {
+    margin-top: @header-height;
+    margin-bottom: @bottom-navigation-height;
+    padding: 8px;
+}
+
+.sticky-navbar {
+    position: fixed;
+    height: @header-height;
+    left: 0;
+    width: 100%;
+    background: @jw-blue;
+    color: #fff;
+
+    &
+    .logo {
+        width: @header-height;
+    }
+}
+
+.header {
+    .sticky-navbar();
+    top: 0;    
+}
+
+.bottom-nav {
+    .sticky-navbar();
+    bottom: 0;
+}
+
