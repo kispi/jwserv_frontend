@@ -7,6 +7,10 @@ export default {
         translation: {
             locale: window.localStorage.getItem("locale") || "en",
             texts: {
+                JWSERV: {
+                    en: "JWServ",
+                    kr: "JWServ"
+                },
                 WELCOME: {
                     en: "Welcome!",
                     kr: "환영합니다!"
@@ -22,6 +26,14 @@ export default {
                 LOGIN: {
                     en: "Login",
                     kr: "로그인"
+                },
+                EMAIL: {
+                    en: "Email",
+                    kr: "이메일"
+                },
+                PASSWORD: {
+                    en: "Password",
+                    kr: "비밀번호"
                 }
             }
         }
