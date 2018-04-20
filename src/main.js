@@ -27,6 +27,9 @@ axios.defaults.transformResponse = [function (response) {
 axios.defaults.baseURL = process.env.API_URL
 Vue.prototype.$http = axios
 
+import * as directives from './directives'
+Vue.directive('redirect', directives.redirect);
+
 Vue.filter('translate', filter.translate)
 
 new Vue({
