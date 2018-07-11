@@ -1,17 +1,16 @@
 <template>
     <div class="dashboard">
-        <Stat :stat="stat" v-for="stat in stats" :key="stat.id"/>
+        <!-- <Stat :stat="stat" v-for="stat in stats" :key="stat.id"/> -->
     </div>
 </template>
 
 <script>
 import CommonMixin from "@/mixins/Common";
-import Stat from "@/components/Stat";
 
 export default {
     name: 'Status',
     mixins: [CommonMixin],
-    components: {Stat},
+    // components: {Stat},
     data: () => ({
         stats: null,
     }),

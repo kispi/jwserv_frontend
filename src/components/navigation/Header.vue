@@ -1,18 +1,18 @@
 <template>
     <div class="header" ref="header">
-        <div class="nav-bar-controls" v-if="!isLogin">
+        <div class="nav-bar-controls">
             <div class="pull-left">
                 <a class="back" @click="onClickBack()"><i class="zmdi zmdi-arrow-left"></i></a>
             </div>
             <div class="pull-right">
-                <a class="nav-bar-button mobile-search"></a>
+                <a class="nav-bar-button mobile-search" v-if="!showAllMenues"></a>
                 <a class="nav-bar-button mobile-lang" @click="changeLang()"></a>
-                <a class="nav-bar-button mobile-menu" @click="showSidebar = !showSidebar"></a>
+                <a class="nav-bar-button mobile-menu" @click="showSidebar = !showSidebar" v-if="!showAllMenues"></a>
             </div>
         </div>
 
         <transition enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
-            <ul class="right-side-bar shadow" v-if="showSidebar && !isLogin">
+            <ul class="right-side-bar shadow" v-if="showSidebar && !showAllMenues">
                 <li v-for="item in menu" :key="item.title" @click="onButton(item)">{{ item.title }}</li>
             </ul>
         </transition>
@@ -33,10 +33,13 @@ export default {
             var menu = [
                 {
                     key: "STATUS",
+                    route: "service-status"
                 }, {
                     key: "WRITE",
+                    route: "write-card"
                 }, {
                     key: "PROFILE",
+                    route: "profile"
                 }, {
                     key: "LOGOUT",
                 }
@@ -46,8 +49,8 @@ export default {
             })
             return menu;
         },
-        isLogin() {
-            return (this.currentRoute.name === "Login")
+        showAllMenues() {
+            return (this.currentRoute.name === "Login") || (this.currentRoute.name === "Signup");
         }
     },
     created() {
@@ -81,16 +84,10 @@ export default {
         },
         onButton(item) {
             this.showSidebar = false;
-            switch (item.key) {
-                case "STATUS":
-                    break;
-                case "WRITE":
-                    break;
-                case "PROFILE":
-                    break;
-                case "LOGOUT":
-                    this.logout();
-                    break;
+            if (item.key === "LOGOUT") {
+                this.logout();
+            } else {
+                this.$router.push("/" + item.route);
             }
         }
     }

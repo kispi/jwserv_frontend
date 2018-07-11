@@ -1,0 +1,36 @@
+.service-card {
+    border: solid 1px @brand-primary;
+    background: rgba(245, 245, 220, 0.5);
+    margin: 16px;
+    height: 130px;
+}
+
+.service-card-header {
+    background: palegoldenrod;
+    direction: rtl;
+    i {
+        padding: 4px;
+        font-size: 24px;
+    }
+}
+
+.row {
+    & div {
+        padding: 8px;
+        text-align: center;
+        display: inline-block;
+
+        &.memo {
+            width: 100%;
+            border-top: dotted 1px @brand-primary;
+        }
+
+        &.start-at, &.end-at, &.area, &.leader {
+            border-top: dotted 1px @brand-primary;
+        }
+
+        &.area, &.start-at {
+            border-right: dotted 1px @brand-primary;
+        }
+    }
+}

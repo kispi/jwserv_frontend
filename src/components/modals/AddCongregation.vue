@@ -56,9 +56,9 @@ export default {
                     url: '/congregations',
                     data: payload
                 });
-                return Promise.resolve(congregationName);
+                return Promise.resolve(resp.data);
             } catch (e) {
-                return Promise.reject(e);
+                return Promise.reject(e.response);
             }
         },
         emitIfMaskIsClicked(e) {

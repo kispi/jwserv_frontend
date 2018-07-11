@@ -4,6 +4,7 @@ import AuthCheck from './auth-check'
 import Landing from '@/components/Landing'
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
+import ServiceStatus from '@/components/ServiceStatus'
 import Dashboard from '@/components/Dashboard'
 
 Vue.use(Router)
@@ -25,6 +26,11 @@ const router = new Router({
         path: '/dashboard',
         name: 'Dashboard',
         component: Dashboard,
+        beforeEnter: AuthCheck
+    }, {
+        path: '/service-status',
+        name: 'ServiceStatus',
+        component: ServiceStatus,
         beforeEnter: AuthCheck
     }]
 })

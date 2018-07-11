@@ -59,17 +59,17 @@ export default {
             };
             try {
                 await this.$store.dispatch("signUp", payload);
-                this.login()
+                this.login(payload)
             } catch (e) {
                 console.error(e.response.data);
             }
         },
-        async login() {
+        async login(payload) {
             try {
                 await this.$store.dispatch("signIn", payload);
                 this.$router.push("dashboard");
             } catch (e) {
-                console.error(e.response.data);
+                console.error(e);
             }
         },
         onCongregationSelected(congregation) {

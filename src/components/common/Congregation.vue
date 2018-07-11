@@ -44,10 +44,12 @@ export default {
     },
     methods: {
         async init() {
+            this.reload();
+        },
+        async reload() {
             try {
                 const resp = await $http({method: 'get', url: '/congregations' + '?orderby=name'});
                 this.congregations = resp.data.data;
-
             } catch (e) {
                 console.error(e.response);
             }
@@ -71,16 +73,17 @@ export default {
             this.showCongregations = false;
             this.showAddCongregation = true;
         },
-        onAddCongregationConfirmed(result) {
+        onAddCongregationConfirmed(promise) {
             this.showAddCongregation = false;
-            if (typeof result === 'Promise') {
-                result
+            if (promise) {
+                promise
                     .then(r => {
-                        console.log(r);
+                        this.reload();
+                        this.showCongregations = true;
                     })
                     .catch(e => {
                         this.addCongregationError = true;
-                        this.errMsg = e.response.data;
+                        this.errMsg = e.data;
                     })
             }
         }
