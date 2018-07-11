@@ -2,10 +2,39 @@ input {
     border: 1px solid rgba(0, 0, 0, 0.25);
     border-radius: 4px;
     font-size: @font-size-large + 2px;
-    padding: 12px;
+    padding: 8px;
 }
 
 .input-block {
     width: 100%;
     display: block;
+}
+
+.required::after {
+    content: '*';
+    color: #ff0000;
+    font-size: 14pt;
+}
+
+.select {
+    position: relative;
+
+    &:after {
+        content: '\f2b2';
+        display: inline-block;
+        font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
+        font-size: 12px;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        position: absolute;
+        right: 4px;
+        bottom: 4px;
+        pointer-events: none;
+        color: rgba(0, 0, 0, 0.24);
+    }
+
+    &:not(.fg-line):before {
+        right: 0;
+    }
 }

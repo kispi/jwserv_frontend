@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
-    <Header/>
-    <div id="section">
-        <router-view/>
+    <div id="app">
+        <Header :currentRoute="currentRoute()"/>
+        <div id="section">
+            <router-view/>
+        </div>
+        <BottomNav v-if="showNav()"/>
     </div>
-    <BottomNav v-if="showNav()"/>
-  </div>
 </template>
 
 <script>
@@ -19,6 +19,9 @@ export default {
     },
     name: 'App',
     methods: {
+        currentRoute() {
+            return this.$router.currentRoute;
+        },
         showNav() {
             return this.$router.currentRoute.name !== 'Login';
         }

@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import { store as $store } from '@/store'
 
 export const translate = (key) => {

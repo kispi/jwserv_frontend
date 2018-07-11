@@ -13,17 +13,13 @@ export default {
 
         const authToken = resp.data.data.authToken
         const setAuthTokenPromise = dispatch('setAuthToken', { authToken })
-
-        const user = resp.data.data.user
-        const updateUserPromise = dispatch('updateUser', user)
-
-        return Promise.all([setAuthTokenPromise, updateUserPromise])
+        return Promise.all([setAuthTokenPromise])
     },
 
     async signIn({ commit, dispatch }, payload) {
         const resp = await $http.post('signInLocal', payload)
-        if (resp.data === "Non Exist User") {
-            return 
+        if (resp.data === "NON_EXIST_USER") {
+            return
         }
         const authToken = resp.data.data.authToken
         const setAuthTokenPromise = await dispatch('setAuthToken', { authToken })
@@ -37,9 +33,8 @@ export default {
 
     signOut({ commit, dispatch }) {
         const clearAuthTokenPromise = dispatch('clearAuthToken')
-        const signOutPromise = $http.get('/signOut')
 
-        return Promise.all([clearAuthTokenPromise, signOutPromise])
+        return Promise.all([clearAuthTokenPromise])
     },
 
     loadAuthToken({ dispatch }) {

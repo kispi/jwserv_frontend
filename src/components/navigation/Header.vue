@@ -1,14 +1,19 @@
 <template>
-    <div class="header">
+    <div class="header" ref="header">
         <div class="nav-bar-controls" v-if="!isLogin">
-            <a class="nav-bar-button mobile-search"></a>
-            <a class="nav-bar-button mobile-lang" @click="changeLang()"></a>
-            <a class="nav-bar-button mobile-menu" @click="showSidebar = !showSidebar"></a>
+            <div class="pull-left">
+                <a class="back" @click="onClickBack()"><i class="zmdi zmdi-arrow-left"></i></a>
+            </div>
+            <div class="pull-right">
+                <a class="nav-bar-button mobile-search"></a>
+                <a class="nav-bar-button mobile-lang" @click="changeLang()"></a>
+                <a class="nav-bar-button mobile-menu" @click="showSidebar = !showSidebar"></a>
+            </div>
         </div>
 
         <transition enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
-            <ul class="right-side-bar shadow" v-if="showSidebar">
-                <li v-for="item in menu" :key="item.title">{{ item.title }}</li>
+            <ul class="right-side-bar shadow" v-if="showSidebar && !isLogin">
+                <li v-for="item in menu" :key="item.title" @click="onButton(item)">{{ item.title }}</li>
             </ul>
         </transition>
     </div>
@@ -16,6 +21,7 @@
 
 <script>
 export default {
+    props: ['currentRoute'],
     name: 'Header',
     data: () => ({
         showSidebar: false,
@@ -23,25 +29,41 @@ export default {
     mounted() {
     },
     computed: {
-        isLogin() {
-            return (this.$router.currentRoute.name === "Login")
-        },
         menu() {
-            return [
+            var menu = [
                 {
-                    title: this.$options.filters.translate("STATUS"),
-                    href: "status"
+                    key: "STATUS",
                 }, {
-                    title: this.$options.filters.translate("WRITE"),
-                    href: "write"
+                    key: "WRITE",
                 }, {
-                    title: this.$options.filters.translate("PROFILE"),
-                    href: "profile"
+                    key: "PROFILE",
+                }, {
+                    key: "LOGOUT",
                 }
-            ]
+            ];
+            menu.forEach(m => {
+                m.title = this.$options.filters.translate(m.key);
+            })
+            return menu;
+        },
+        isLogin() {
+            return (this.currentRoute.name === "Login")
         }
     },
+    created() {
+        document.addEventListener('click', this.documentClick)
+    },
+    destroyed() {
+        document.removeEventListener('click', this.documentClick)
+    },
     methods: {
+        documentClick(e){
+            let el = this.$refs.header;
+            let target = e.target;
+            if (el !== target && !el.contains(target)) {
+                this.showSidebar = false;
+            }
+        },
         changeLang() {
             this.$store.dispatch("loadLocale");
             var locale = this.$store.getters.translation.locale;
@@ -49,13 +71,28 @@ export default {
                 locale = (locale === "kr" ? "en" : "kr");
             }
             this.$store.dispatch("setLocale", locale);
+        },
+        onClickBack() {
+            this.$router.go(-1);
+        },
+        logout() {
+            this.$store.dispatch('clearAuthToken');
+            this.$router.push("/login");
+        },
+        onButton(item) {
+            this.showSidebar = false;
+            switch (item.key) {
+                case "STATUS":
+                    break;
+                case "WRITE":
+                    break;
+                case "PROFILE":
+                    break;
+                case "LOGOUT":
+                    this.logout();
+                    break;
+            }
         }
     }
 }
 </script>
-
-<style lang="less" scoped>
-    .right-side-bar {
-        animation-duration: 0.3s;
-    }
-</style>

@@ -1,21 +1,30 @@
 <template>
-  <div class="login">
-    <div class="m-t-30 m-b-30 f-30 f-700">{{ 'WELCOME' | translate }}</div>
-    <input class="input-block m-b-10" v-model="email" :placeholder="'EMAIL' | translate"/>
-    <input type="password" class="input-block m-b-30" v-model="password" :placeholder="'PASSWORD' | translate"/>
-    <button class="btn btn-primary btn-block m-b-10" @click="onClickLogin()">{{ 'LOGIN' | translate }}</button>
-    <button class="btn btn-secondary btn-block" @click="onClickSignUp()">{{ 'CREATE_ACCOUNT' | translate }}</button>
-  </div>
+    <div class="login">
+        <Alert @close="loginError = false" v-if="loginError">
+            <h3 slot="header">{{ errMsg | translate }}</h3>
+            <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
+        </Alert>
+        <div class="m-t-30 m-b-30 f-30 f-700">{{ 'WELCOME' | translate }}</div>
+        <input class="input-block m-b-10" v-model="email" :placeholder="'EMAIL' | translate"/>
+        <input type="password" class="input-block m-b-30" v-model="password" :placeholder="'PASSWORD' | translate"/>
+        <button class="btn btn-primary btn-block m-b-10" @click="onClickLogin()">{{ 'LOGIN' | translate }}</button>
+        <button class="btn btn-secondary btn-block" @click="onClickSignUp()">{{ 'CREATE_ACCOUNT' | translate }}</button>
+    </div>
 </template>
 
 <script>
-import * as $http from "axios";
+import Alert from "@/components/modals/Alert";
 
 export default {
+    components: {
+        Alert
+    },
     name: 'Login',
     data: () => ({
         email: null,
-        password: null
+        password: null,
+        loginError: false,
+        errMsg : null,
     }),
     mounted() {
         this.init();
@@ -40,20 +49,14 @@ export default {
                 await this.$store.dispatch("signIn", payload);
                 this.$router.push("dashboard");
             } catch (e) {
-                console.error(e.response.data);
+                this.errMsg = e.response.data;
+                this.loginError = true;
             }
         },
         async onClickSignUp() {
-            let data = {
-                // 회원가입정보
-            }
-            try {
-                const resp = await $http.post("/signUp", data);
-            } catch (e) {
-                console.error(e.response.data);
-            }
+            this.$router.push("signup");
         }
-  }
+    }
 }
 </script>
 
