@@ -31,6 +31,14 @@ export default {
                     en: "Cancel",
                     kr: "취소"
                 },
+                CONFIRM_DELETE_SERVICE_RECORD: {
+                    en: "Delete the Service Record",
+                    kr: "봉사 기록 삭제"
+                },
+                CONFIRM_DELETE_SERVICE_RECORD_TXT: {
+                    en: "Are you sure you want to delete the service record?",
+                    kr: "정말로 해당 봉사 기록을 삭제할까요?"
+                },
                 STATUS: {
                     en: "Status",
                     kr: "현황보기"

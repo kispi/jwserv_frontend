@@ -1,7 +1,7 @@
 <template>
     <div class="service-card">
         <div class="row service-card-header">
-            <i class="zmdi zmdi-delete m-r-10"></i>
+            <i class="zmdi zmdi-delete m-r-10" @click="$emit('showAskDelete')"></i>
             <i class="zmdi zmdi-edit"></i>   
         </div>
         <div class="row">

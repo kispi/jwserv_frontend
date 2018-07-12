@@ -1,19 +1,32 @@
 <template>
     <div class="service-status">
-        <ServiceCard :record="record" v-for="record in serviceRecords" :key="record.id"></ServiceCard>
+        <Confirm
+            :title="$options.filters.translate('CONFIRM_DELETE_SERVICE_RECORD')"
+            :text="$options.filters.translate('CONFIRM_DELETE_SERVICE_RECORD_TXT')"
+            v-if="showAskDelete"
+            v-on:close="onClose">
+        </Confirm>
+        <ServiceCard
+            :record="record"
+            v-for="record in serviceRecords"
+            :key="record.id"
+            v-on:showAskDelete="showAskDelete = true"
+            ></ServiceCard>
     </div>
 </template>
 
 <script>
-import ServiceCard from '@/components/ServiceCard'
+import Confirm from '@/components/modals/Confirm';
+import ServiceCard from '@/components/ServiceCard';
 import * as $http from "axios";
 
 export default {
-    components: { ServiceCard },
+    components: { ServiceCard, Confirm },
     name: 'ServiceStatus',
     data () {
         return {
             serviceRecords: null,
+            showAskDelete: false,
         }
     },
     mounted() {
@@ -29,6 +42,10 @@ export default {
                 '/serviceRecords', { params }
             );
             this.serviceRecords = resp.data.data;
+        },
+        onClose(option) {
+            this.showAskDelete = false;
+            console.log(option);
         }
     }
 }

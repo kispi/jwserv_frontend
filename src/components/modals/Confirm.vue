@@ -1,25 +1,28 @@
 <template>
-    <div class="modal-login-error">
+    <div class="modal-confirm">
         <transition name="modal">
             <div class="modal-mask" @click="emitIfMaskIsClicked($event)">
                 <div class="modal-wrapper">
                     <div class="modal-container">
                         <div class="modal-header">
                             <slot name="header">
-                            default header
+                                <h3>{{ title }}</h3>
                             </slot>
                         </div>
 
                         <div class="modal-body">
                             <slot name="body">
-                            default body
+                                {{ text }}
                             </slot>
                         </div>
 
                         <div class="modal-footer">
                             <slot name="footer">
                                 <div class="btn-container">
-                                    <button class="btn btn-primary modal-default-button" @click="$emit('close')">
+                                    <button class="btn btn-secondary modal-default-button" @click="$emit('close', 'cancel')">
+                                        {{ 'CANCEL' | translate }}
+                                    </button>
+                                    <button class="btn btn-primary modal-default-button" @click="$emit('close', 'ok')">
                                         {{ 'OK' | translate }}
                                     </button>
                                 </div>
@@ -34,18 +37,19 @@
 
 <script>
 export default {
-    name: 'ModalAlert',
-    data: () => ({}),
-    mounted() {},
+    name: 'Confirm',
+    props: [ 'title', 'text' ],
     methods: {
         emitIfMaskIsClicked(e) {
             if (e.target.className === 'modal-wrapper')
                 this.$emit('close');
-        }
+        },
     }
 }
 </script>
 
 <style scoped>
-
+.btn-container > button {
+    direction: rtl;
+}
 </style>

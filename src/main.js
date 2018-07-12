@@ -30,6 +30,7 @@ Vue.prototype.$http = axios
 import * as directives from './directives'
 Vue.directive('redirect', directives.redirect)
 Vue.filter('translate', filter.translate)
+Vue.prototype.$bus = new Vue({})
 
 new Vue({
     el: '#app',

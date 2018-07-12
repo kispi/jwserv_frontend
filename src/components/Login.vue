@@ -5,8 +5,8 @@
             <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
         </Alert>
         <div class="m-t-30 m-b-30 f-30 f-700">{{ 'WELCOME' | translate }}</div>
-        <input class="input-block m-b-10" v-model="email" :placeholder="'EMAIL' | translate"/>
-        <input type="password" class="input-block m-b-30" v-model="password" :placeholder="'PASSWORD' | translate"/>
+        <input class="input-block m-b-10" v-model="email" :placeholder="'EMAIL' | translate" v-on:keyup.enter="onClickLogin"/>
+        <input type="password" class="input-block m-b-30" v-model="password" :placeholder="'PASSWORD' | translate" v-on:keyup.enter="onClickLogin"/>
         <button class="btn btn-primary btn-block m-b-10" @click="onClickLogin()">{{ 'LOGIN' | translate }}</button>
         <button class="btn btn-secondary btn-block" @click="onClickSignUp()">{{ 'CREATE_ACCOUNT' | translate }}</button>
     </div>
