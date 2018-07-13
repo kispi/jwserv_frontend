@@ -1,20 +1,28 @@
 <template>
     <div class="congregation" ref="congregation">
-        <Alert @close="addCongregationError = false" v-if="addCongregationError">
-            <h3 slot="header">{{ errMsg | translate }}</h3>
-            <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
-        </Alert>
-        <AddCongregation @close="onAddCongregationConfirmed" v-if="showAddCongregation"></AddCongregation>
+        
+        <transition name="modal">
+            <Alert @close="addCongregationError = false" v-if="addCongregationError">
+                <h3 slot="header">{{ errMsg | translate }}</h3>
+                <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
+            </Alert>
+        </transition>
+        
+        <transition name="modal">
+            <AddCongregation @close="onAddCongregationConfirmed" v-if="showAddCongregation"></AddCongregation>
+        </transition>
         <div class="selected-congregation select" @click="toggleShowCongregations()">
             <span v-if="congregation">{{ congregation.name }}</span>
             <span v-if="!congregation">{{ 'SELECT_CONGREGATION' | translate }}</span>
         </div>
+        
         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <ul class="congregation-list shadow pull-right" v-if="showCongregations">
                 <li @click="onAddCongregationClick()">{{ 'ADD_CONGREGATION' | translate }} <span class="add-congregation zmdi zmdi-plus pull-right"></span></li>
                 <li v-for="c in congregations" :key="c.id" @click="onSelectCongregation(c)">{{ c.name }}</li>
             </ul>
         </transition>
+
     </div>
 </template>
 <script>

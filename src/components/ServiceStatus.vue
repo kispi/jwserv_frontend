@@ -1,16 +1,22 @@
 <template>
     <div class="service-status">
 
+        <transition name="fade" tag="div">
+            <div class="search" v-if="showSearch">
+                <input v-model="query"/>
+            </div>
+        </transition>
+
         <transition name="modal">
             <Confirm
                 :title="$options.filters.translate('CONFIRM_DELETE_SERVICE_RECORD')"
                 :text="$options.filters.translate('CONFIRM_DELETE_SERVICE_RECORD_TXT')"
                 v-if="showAskDelete"
-                v-on:close="onClose">
+                v-on:close="onCloseAskDelete">
             </Confirm>
         </transition>
 
-        <transition-group name="list-complete" tag="div">
+        <transition-group name="list-complete" tag="div" class="service-cards">
             <ServiceCard
                 :record="record"
                 v-for="record in serviceRecords"
@@ -34,8 +40,18 @@ export default {
     data: () => ({
         serviceRecords: null,
         showAskDelete: false,
-        selectedRecord: null
+        selectedRecord: null,
+        showSearch: false,
+        query: null,
     }),
+    created() {
+        this.$bus.$on("showSearch", () => {
+            this.showSearch = true;
+        });
+    },
+    beforeDestroy: function() {
+        this.$bus.$off("showSearch");
+    },
     mounted() {
         this.reload();
     },
@@ -43,7 +59,7 @@ export default {
         async reload() {
             let params = {
                 orderby: "-id",
-                limit: 20
+                limit: 20,
             }
             try {
                 const resp = await $http.get(
@@ -58,7 +74,7 @@ export default {
             this.showAskDelete = true;
             this.selectedRecord = record;
         },
-        onClose(option) {
+        onCloseAskDelete(option) {
             this.showAskDelete = false;
             if (option === "ok" && this.selectedRecord) {
                 this.deleteRecord()
@@ -77,7 +93,15 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="less" scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
 .list-complete-item {
     transition: all 0.5s;
 }
@@ -89,5 +113,24 @@ export default {
 
 .list-complete-leave-active {
     position: absolute;
+}
+
+.service-cards {
+    position: fixed;
+    height: calc(~"100vh - 150px");
+    overflow: scroll;
+    left: 0;
+    right: 0;
+}
+
+.search {
+    position: fixed;
+    top: 48px;
+    right: 0;
+    z-index: 1;
+
+    > input {
+        padding: 8px;
+    }
 }
 </style>

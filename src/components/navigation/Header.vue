@@ -5,7 +5,7 @@
                 <a class="back" @click="onClickBack()"><i class="zmdi zmdi-arrow-left"></i></a>
             </div>
             <div class="pull-right">
-                <a class="nav-bar-button mobile-search" v-if="!showAllMenues"></a>
+                <a class="nav-bar-button mobile-search" @click="$bus.$emit('showSearch')" v-if="!showAllMenues"></a>
                 <a class="nav-bar-button mobile-lang" @click="changeLang()"></a>
                 <a class="nav-bar-button mobile-menu" @click="showSidebar = !showSidebar" v-if="!showAllMenues"></a>
             </div>
