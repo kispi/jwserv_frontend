@@ -45,8 +45,4 @@ export default {
 </script>
 
 <style scoped>
-.btn-container > button {
-    direction: rtl;
-    width: 80px;
-}
 </style>

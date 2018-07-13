@@ -5,9 +5,9 @@
                 <a class="back" @click="onClickBack()"><i class="zmdi zmdi-arrow-left"></i></a>
             </div>
             <div class="pull-right">
-                <a class="nav-bar-button mobile-search" @click="$bus.$emit('showSearch')" v-if="!showAllMenues"></a>
+                <a class="nav-bar-button mobile-search" v-if="!showAllMenues"></a>
                 <a class="nav-bar-button mobile-lang" @click="changeLang()"></a>
-                <a class="nav-bar-button mobile-menu" @click="showSidebar = !showSidebar" v-if="!showAllMenues"></a>
+                <a class="nav-bar-button mobile-menu" v-if="!showAllMenues"></a>
             </div>
         </div>
 
@@ -54,18 +54,23 @@ export default {
         }
     },
     created() {
-        document.addEventListener('click', this.documentClick)
+        document.addEventListener('click', this.collapse)
     },
     destroyed() {
-        document.removeEventListener('click', this.documentClick)
+        document.removeEventListener('click', this.collapse)
     },
     methods: {
-        documentClick(e){
-            let el = this.$refs.header;
-            let target = e.target;
-            if (el !== target && !el.contains(target)) {
-                this.showSidebar = false;
+        collapse(e) {
+            if (e.target.className === 'nav-bar-button mobile-menu') {
+                this.showSidebar = !this.showSidebar;
+                return;
             }
+
+            this.showSidebar = [
+                'nav-bar-button mobile-menu',
+            ].some(c => {
+                return c === e.target.className;
+            })
         },
         changeLang() {
             this.$store.dispatch("loadLocale");

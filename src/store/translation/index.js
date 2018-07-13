@@ -93,7 +93,7 @@ export default {
                 },
                 LOGIN: {
                     en: "Login",
-                    kr: "로그인"
+                    kr: "로그자"
                 },
                 EMAIL: {
                     en: "Email",
@@ -131,6 +131,22 @@ export default {
                     en: "Password is encrypted, so administrator cannot know it.",
                     kr: "비밀번호는 암호화되어 저장되므로 관리자도 알 수 없습니다."
                 },
+                LEADER_NAME: {
+                    en: "Leader",
+                    kr: "인도자"
+                },
+                AREA: {
+                    en: "Area",
+                    kr: "구역번호"
+                },
+                STARTED_AT: {
+                    en: "Started",
+                    kr: "시작일"
+                },
+                ENDED_AT: {
+                    en: "Ended",
+                    kr: "완료일"
+                }
             }
         }
     },

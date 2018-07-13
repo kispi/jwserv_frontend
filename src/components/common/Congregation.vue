@@ -1,9 +1,9 @@
 <template>
     <div class="congregation" ref="congregation">
-        
+
         <transition name="modal">
             <Alert @close="addCongregationError = false" v-if="addCongregationError">
-                <h3 slot="header">{{ errMsg | translate }}</h3>
+                <h3 slot="header" class="c-danger">{{ errMsg | translate }}</h3>
                 <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
             </Alert>
         </transition>

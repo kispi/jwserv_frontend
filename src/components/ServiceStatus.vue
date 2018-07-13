@@ -3,7 +3,17 @@
 
         <transition name="fade" tag="div">
             <div class="search" v-if="showSearch">
-                <input v-model="query"/>
+                <input class="query-value" v-focus v-model="keyword" ref="query-value" />
+                <div class="filters">
+                    <div>{{ selectedFilter.title | translate }}</div>
+                    <i class="zmdi zmdi-filter-list" @click="showFilters = !showFilters"></i>
+
+                    <transition name="fade">
+                        <ul v-if="showFilters">
+                            <li class="filter-item" v-for="filter in filters" :key="filter.title" @click="selectFilter(filter)">{{ filter.title | translate }}</li>
+                        </ul>
+                    </transition>
+                </div>
             </div>
         </transition>
 
@@ -30,6 +40,7 @@
 </template>
 
 <script>
+import debounce from '@/modules';
 import Confirm from '@/components/modals/Confirm';
 import ServiceCard from '@/components/ServiceCard';
 import * as $http from "axios";
@@ -42,30 +53,68 @@ export default {
         showAskDelete: false,
         selectedRecord: null,
         showSearch: false,
-        query: null,
+        showFilters: false,
+        selectedFilter: null,
+        keyword: null,
     }),
+    watch: {
+        keyword: debounce(function(newVal) {
+            this.reload(newVal);
+        }, 500)
+    },
     created() {
-        this.$bus.$on("showSearch", () => {
-            this.showSearch = true;
-        });
+        document.addEventListener('click', this.collapse);
     },
     beforeDestroy: function() {
         this.$bus.$off("showSearch");
+        document.removeEventListener('click', this.collapse)
+    },
+    computed: {
+        filters() {
+            return [
+                {
+                    key: "leaderName__icontains",
+                    title: "LEADER_NAME"
+                }, {
+                    key: "area",
+                    title: "AREA"
+                }, {
+                    key: "startedAt__icontains",
+                    title: "STARTED_AT"
+                }, {
+                    key: "endedAt__icontains",
+                    title: "ENDED_AT"
+                }
+            ]
+        }
     },
     mounted() {
+        this.selectedFilter = this.filters[0];
         this.reload();
     },
     methods: {
         async reload() {
-            let params = {
+            var params = {
                 orderby: "-id",
                 limit: 20,
             }
+
+            if (this.keyword && this.keyword !== "" && this.selectedFilter)
+                params.filter = this.selectedFilter.key + ":" + this.keyword;
+
             try {
                 const resp = await $http.get(
                     '/serviceRecords', { params }
                 );
                 this.serviceRecords = resp.data.data;
+            } catch (e) {
+                console.error(e.response);
+            }
+        },
+        async deleteRecord() {
+            try {
+                const resp = await $http({ method: 'delete', url: '/serviceRecords/' + this.selectedRecord.id });
+                this.reload();
             } catch (e) {
                 console.error(e.response);
             }
@@ -80,14 +129,26 @@ export default {
                 this.deleteRecord()
             }
         },
-        async deleteRecord() {
-            try {
-                const resp = await $http({ method: 'delete', url: '/serviceRecords/' + this.selectedRecord.id });
-                this.reload();
-            } catch (e) {
-                console.error(e.response);
-            }
+        selectFilter(filter) {
+            this.showFilters = false;
+            this.selectedFilter = filter;
+            this.$refs['query-value'].focus();
         },
+        collapse(e) {
+            if (e.target.className === 'nav-bar-button mobile-search') {
+                this.showSearch = !this.showSearch;
+                return;
+            }
+
+            this.showSearch = [
+                'nav-bar-button mobile-search',
+                'query-value',
+                'zmdi zmdi-filter-list',
+                'filter-item'
+            ].some(c => {
+                return c === e.target.className;
+            })
+        }
     }
 }
 </script>
@@ -95,11 +156,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
 .fade-enter-active, .fade-leave-active {
-  transition: opacity .3s;
+    transition: opacity .3s;
 }
 
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+    opacity: 0;
 }
 
 .list-complete-item {
@@ -129,8 +190,56 @@ export default {
     right: 0;
     z-index: 1;
 
-    > input {
-        padding: 8px;
+    input {
+        width: 226px;
+        padding-right: 80px;
+    }
+
+    .filters {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        line-height: 40px;
+
+        div {
+            font-size: 12px;
+        }
+
+        i {
+            padding: 8px;
+            font-size: 24px;
+            color: rgba(0, 0, 0, 0.5);
+
+            &.zmdi-filter-list {
+                right: 0;
+            }
+        }
+
+        ul {
+            position: absolute;
+            top: 0;
+            right: 0;
+            animation-duration: 0.3s;
+            padding: 0;
+            margin: 0;
+            top: 40px;
+            width: 226px;
+
+            li {
+                line-height: initial;
+                padding: 8px;
+                cursor: pointer;
+                border: solid 1px rgba(0, 0, 0, 0.25);
+                border-bottom: dotted 1px rgba(0, 0, 0, 0.1);
+                background: white;
+                list-style-type: none;
+
+                &:hover {
+                    background: rgba(0, 0, 0, 0.05);
+                }
+            }
+        }
     }
 }
 </style>

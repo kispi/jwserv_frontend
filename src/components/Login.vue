@@ -3,7 +3,7 @@
         
         <transition name="modal">
             <Alert @close="loginError = false" v-if="loginError">
-                <h3 slot="header">{{ errMsg | translate }}</h3>
+                <h3 slot="header" class="c-danger">{{ errMsg | translate }}</h3>
                 <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
             </Alert>
         </transition>
@@ -13,7 +13,7 @@
         <input type="password" class="input-block m-b-30" v-model="password" :placeholder="'PASSWORD' | translate" v-on:keyup.enter="onClickLogin"/>
         <button class="btn btn-primary btn-block m-b-10" @click="onClickLogin()">{{ 'LOGIN' | translate }}</button>
         <button class="btn btn-secondary btn-block" @click="onClickSignUp()">{{ 'CREATE_ACCOUNT' | translate }}</button>
-        
+
     </div>
 </template>
 
