@@ -1,8 +1,9 @@
 <template>
     <div class="service-card">
         <div class="row service-card-header">
-            <i class="zmdi zmdi-delete m-r-10" @click="$emit('showAskDelete')"></i>
-            <i class="zmdi zmdi-edit"></i>   
+            <i class="zmdi zmdi-delete m-r-10" @click="$emit('showAskDelete', record)"></i>
+            <i class="zmdi zmdi-edit" @click="edit = true" v-if="!edit"></i>
+            <i class="zmdi zmdi-save" @click="edit = false" v-if="edit"></i>
         </div>
         <div class="row">
             <div class="area col-xs-6">{{ record.area }}</div>
@@ -21,6 +22,9 @@
 <script>
 export default {
     name: "ServiceCard",
+    data: () => ({
+        edit: false,
+    }),
     props: ["record"],
 };
 </script>

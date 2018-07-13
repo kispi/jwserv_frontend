@@ -1,37 +1,33 @@
 <template>
-    <div class="modal-confirm">
-        <transition name="modal">
-            <div class="modal-mask" @click="emitIfMaskIsClicked($event)">
-                <div class="modal-wrapper">
-                    <div class="modal-container">
-                        <div class="modal-header">
-                            <slot name="header">
-                                <h3>{{ title }}</h3>
-                            </slot>
-                        </div>
+    <div class="modal-mask" @click="emitIfMaskIsClicked($event)">
+        <div class="modal-wrapper">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <slot name="header">
+                        <h3>{{ title }}</h3>
+                    </slot>
+                </div>
 
-                        <div class="modal-body">
-                            <slot name="body">
-                                {{ text }}
-                            </slot>
-                        </div>
+                <div class="modal-body">
+                    <slot name="body">
+                        {{ text }}
+                    </slot>
+                </div>
 
-                        <div class="modal-footer">
-                            <slot name="footer">
-                                <div class="btn-container">
-                                    <button class="btn btn-secondary modal-default-button" @click="$emit('close', 'cancel')">
-                                        {{ 'CANCEL' | translate }}
-                                    </button>
-                                    <button class="btn btn-primary modal-default-button" @click="$emit('close', 'ok')">
-                                        {{ 'OK' | translate }}
-                                    </button>
-                                </div>
-                            </slot>
+                <div class="modal-footer">
+                    <slot name="footer">
+                        <div class="btn-container">
+                            <button class="btn btn-secondary modal-default-button" @click="$emit('close', 'cancel')">
+                                {{ 'CANCEL' | translate }}
+                            </button>
+                            <button class="btn btn-primary modal-default-button" @click="$emit('close', 'ok')">
+                                {{ 'OK' | translate }}
+                            </button>
                         </div>
-                    </div>
+                    </slot>
                 </div>
             </div>
-        </transition>
+        </div>
     </div>
 </template>
 
@@ -51,5 +47,6 @@ export default {
 <style scoped>
 .btn-container > button {
     direction: rtl;
+    width: 80px;
 }
 </style>
