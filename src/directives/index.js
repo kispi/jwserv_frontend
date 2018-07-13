@@ -23,6 +23,14 @@ Vue.directive('alphaNumeric', {
 
 Vue.directive('focus', {
     inserted: function(el) {
-        el.focus()
+        el.focus();
+        el.select();
+    }
+})
+
+Vue.directive('selected', {
+    inserted: function(el) {
+        el.focus();
+        el.select();
     }
 })

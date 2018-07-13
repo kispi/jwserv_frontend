@@ -3,14 +3,17 @@
 
         <transition name="fade" tag="div">
             <div class="search" v-if="showSearch">
-                <input class="query-value" v-focus v-model="keyword" ref="query-value" />
+                <input class="query-value" v-selected v-model="keyword" ref="query-value" />
                 <div class="filters">
-                    <div>{{ selectedFilter.title | translate }}</div>
+                    <div class="c-secondary f-700">{{ selectedFilter.title | translate }}</div>
                     <i class="zmdi zmdi-filter-list" @click="showFilters = !showFilters"></i>
 
                     <transition name="fade">
                         <ul v-if="showFilters">
-                            <li class="filter-item" v-for="filter in filters" :key="filter.title" @click="selectFilter(filter)">{{ filter.title | translate }}</li>
+                            <li class="filter-item" v-for="filter in filters" :key="filter.title" @click="selectFilter(filter)">
+                                {{ filter.title | translate }}
+                                <i class="zmdi zmdi-check pull-right c-secondary" v-if="selectedFilter.key === filter.key"></i>
+                            </li>
                         </ul>
                     </transition>
                 </div>
@@ -219,6 +222,10 @@ export default {
             &.zmdi-filter-list {
                 right: 0;
             }
+
+            &.zmdi-check {
+                padding: 0;
+            }
         }
 
         ul {
@@ -229,11 +236,11 @@ export default {
             padding: 0;
             margin: 0;
             top: 40px;
-            width: 226px;
+            width: 140px;
 
             li {
                 line-height: initial;
-                padding: 8px;
+                padding: 8 16px;
                 cursor: pointer;
                 border: solid 1px rgba(0, 0, 0, 0.25);
                 border-bottom: dotted 1px rgba(0, 0, 0, 0.1);
