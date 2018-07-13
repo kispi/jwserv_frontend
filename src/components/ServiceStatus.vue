@@ -84,6 +84,9 @@ export default {
                 }, {
                     key: "endedAt__icontains",
                     title: "ENDED_AT"
+                }, {
+                    key: "memo",
+                    title: "MEMO"
                 }
             ]
         }
@@ -133,6 +136,7 @@ export default {
             this.showFilters = false;
             this.selectedFilter = filter;
             this.$refs['query-value'].focus();
+            this.reload(this.keyword);
         },
         collapse(e) {
             if (e.target.className === 'nav-bar-button mobile-search') {
@@ -178,8 +182,9 @@ export default {
 
 .service-cards {
     position: fixed;
-    height: calc(~"100vh - 150px");
     overflow: scroll;
+    top: 48px;
+    bottom: 48px;
     left: 0;
     right: 0;
 }

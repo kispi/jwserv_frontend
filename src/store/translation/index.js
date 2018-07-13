@@ -93,7 +93,7 @@ export default {
                 },
                 LOGIN: {
                     en: "Login",
-                    kr: "로그자"
+                    kr: "로그인"
                 },
                 EMAIL: {
                     en: "Email",
@@ -146,6 +146,10 @@ export default {
                 ENDED_AT: {
                     en: "Ended",
                     kr: "완료일"
+                },
+                MEMO: {
+                    en: "Memo",
+                    kr: "비고"
                 }
             }
         }
