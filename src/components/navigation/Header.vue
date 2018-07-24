@@ -2,10 +2,10 @@
     <div class="header" ref="header">
         <div class="nav-bar-controls">
             <div class="pull-left">
-                <a class="back" @click="onClickBack()"><i class="zmdi zmdi-arrow-left"></i></a>
+                <a class="back" @click="onClickBack()" v-if="showBack"><i class="zmdi zmdi-arrow-left"></i></a>
             </div>
             <div class="pull-right">
-                <a class="nav-bar-button mobile-search" v-if="!showAllMenues"></a>
+                <a class="nav-bar-button mobile-search" v-if="showSearch"></a>
                 <a class="nav-bar-button mobile-lang" @click="changeLang()"></a>
                 <a class="nav-bar-button mobile-menu" v-if="!showAllMenues"></a>
             </div>
@@ -36,7 +36,7 @@ export default {
                     route: "service-status"
                 }, {
                     key: "WRITE",
-                    route: "write-card"
+                    route: "create-record"
                 }, {
                     key: "PROFILE",
                     route: "profile"
@@ -51,6 +51,12 @@ export default {
         },
         showAllMenues() {
             return (this.currentRoute.name === "Login") || (this.currentRoute.name === "Signup");
+        },
+        showSearch() {
+            return (this.currentRoute.name === "ServiceStatus")
+        },
+        showBack() {
+            return (this.currentRoute.name !== "Login")
         }
     },
     created() {

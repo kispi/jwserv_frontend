@@ -6,7 +6,13 @@ import router from './router'
 import axios from 'axios'
 import { store } from './store'
 import * as filter from './filters'
-
+import VCalendar from 'v-calendar'
+import 'v-calendar/lib/v-calendar.min.css'
+Vue.use(VCalendar, {
+    firstDayOfWeek: 1,
+    maxTapDuration: 0
+})
+Vue.use(require('vue-moment'));
 require('./styles/index.less')
 
 Vue.config.productionTip = false

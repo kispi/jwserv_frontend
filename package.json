@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "v-calendar": "^0.9.7",
     "vue": "^2.5.2",
     "vue-material-design-icons": "^1.2.1",
+    "vue-moment": "^4.0.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },

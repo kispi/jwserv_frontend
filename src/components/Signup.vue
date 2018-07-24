@@ -1,5 +1,13 @@
 <template>
     <div class="signup">
+
+        <transition name="modal">
+            <Alert @close="signupError = false" v-if="signupError">
+                <h3 slot="header" class="c-danger">{{ errMsg | translate }}</h3>
+                <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
+            </Alert>
+        </transition>
+
         <div class="header-section m-b-40">
             <div class="m-b-20"><span class="required"></span> {{ 'SIGNUP_REQUIRED' | translate }}</div>
             <div>{{ 'SIGNUP_SECURE' | translate }}</div>
@@ -25,21 +33,25 @@
             <label for="phone">{{ 'PHONE' | translate }}</label>
             <input class="input-block m-b-30 m-t-10" v-model="phone" :placeholder="'PHONE' | translate"/>
 
-            <button class="btn btn-secondary btn-block" @click="onSubmitSignUp()">{{ 'CREATE_ACCOUNT' | translate }}</button>
+            <button type="button" class="btn btn-secondary btn-block" @click="onSubmitSignUp()">{{ 'CREATE_ACCOUNT' | translate }}</button>
         </form>
     </div>
 </template>
 
 <script>
 import * as $http from "axios";
+import Alert from "@/components/modals/Alert";
 import Congregation from "@/components/common/Congregation";
 
 export default {
     components: {
+        Alert,
         Congregation
     },
     name: 'Signup',
     data: () => ({
+        signupError: false,
+        errMsg: null,
         email: null,
         password: null,
         name: null,
@@ -61,13 +73,14 @@ export default {
                 await this.$store.dispatch("signUp", payload);
                 this.login(payload)
             } catch (e) {
-                console.error(e.response.data);
+                this.errMsg = e.response.data;
+                this.signupError = true;
             }
         },
         async login(payload) {
             try {
                 await this.$store.dispatch("signIn", payload);
-                this.$router.push("dashboard");
+                this.$router.push("service-status");
             } catch (e) {
                 console.error(e);
             }
@@ -80,7 +93,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-    .signup {
-        padding: 16px;
-    }
+.signup {
+    padding: 16px;
+}
 </style>

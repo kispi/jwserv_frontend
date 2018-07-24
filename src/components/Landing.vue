@@ -11,7 +11,7 @@ export default {
     methods: {
         init() {
             if (this.$store.getters.user.authToken) {
-                this.$router.push("dashboard")
+                this.$router.push("service-status")
             } else {
                 this.$router.push("login")
             }

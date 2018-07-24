@@ -42,7 +42,7 @@ export default {
                 await this.$store.dispatch("clearAuthToken");
             }
             if (this.$store.getters.user.authToken) {
-                this.$router.push("dashboard");
+                this.$router.push("service-status");
             }
         },
         async onClickLogin() {           
@@ -52,7 +52,7 @@ export default {
             };
             try {
                 await this.$store.dispatch("signIn", payload);
-                this.$router.push("dashboard");
+                this.$router.push("service-status");
             } catch (e) {
                 this.errMsg = e.response.data;
                 this.loginError = true;

@@ -83,6 +83,62 @@ export default {
                     en: "The user with given Email doesn't exist",
                     kr: "해당 이메일을 가진 사용자가 존재하지 않습니다"
                 },
+                ERROR_MISSING_EMAIL: {
+                    en: "Email is required",
+                    kr: "이메일은 필수항목입니다"
+                },
+                ERROR_MISSING_EMAIL_TXT: {
+                    en: "Please give your email address",
+                    kr: "이메일을 입력해주세요"
+                },
+                ERROR_MISSING_NAME: {
+                    en: "Name is required",
+                    kr: "이름은 필수항목입니다"
+                },
+                ERROR_MISSING_NAME_TXT: {
+                    en: "Please give your name",
+                    kr: "이름을 입력해주세요"
+                },
+                ERROR_MISSING_PASSWORD: {
+                    en: "Password is required",
+                    kr: "비밀번호는 필수항목입니다"
+                },
+                ERROR_MISSING_PASSWORD_TXT: {
+                    en: "Please type your password",
+                    kr: "비밀번호를 입력해주세요"
+                },
+                ERROR_MISSING_AREA: {
+                    en: "Area is required",
+                    kr: "구역은 필수항목입니다"
+                },
+                ERROR_MISSING_AREA_TXT: {
+                    en: "Please give the area",
+                    kr: "구역을 입력해주세요"
+                },
+                ERROR_MISSING_STARTED_AT: {
+                    en: "Started is required",
+                    kr: "시작일은 필수항목입니다"
+                },
+                ERROR_MISSING_STARTED_AT_TXT: {
+                    en: "Please tell when it's started",
+                    kr: "시작일을 입력해주세요"
+                },
+                ERROR_MISSING_LEADER_NAME: {
+                    en: "Leader is required",
+                    kr: "인도자는 필수항목입니다"
+                },
+                ERROR_MISSING_LEADER_NAME_TXT: {
+                    en: "Please tell who led",
+                    kr: "인도자가 누구인지 알려주세요"
+                },
+                ERROR_EMAIL_ALREADY_EXISTS: {
+                    en: "Email already exists",
+                    kr: "이미 존재하는 이메일입니다"
+                },
+                ERROR_EMAIL_ALREADY_EXISTS_TXT: {
+                    en: "Please give your email address",
+                    kr: "다른 이메일을 사용해주세요"
+                },
                 INVALID_PASSWORD: {
                     en: "Invalid Password",
                     kr: "잘못된 비밀번호"
@@ -150,6 +206,10 @@ export default {
                 MEMO: {
                     en: "Memo",
                     kr: "비고"
+                },
+                SAVE: {
+                    en: "Save",
+                    kr: "저장"
                 }
             }
         }

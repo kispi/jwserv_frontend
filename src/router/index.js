@@ -5,12 +5,19 @@ import Landing from '@/components/Landing'
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
 import ServiceStatus from '@/components/ServiceStatus'
+import CreateRecord from '@/components/CreateRecord'
 import Dashboard from '@/components/Dashboard'
+import Profile from '@/components/Profile'
+import NotFound from '@/components/NotFound'
 
 Vue.use(Router)
 
 const router = new Router({
     routes: [{
+        path: '/not-found',
+        name: 'NotFound',
+        component: NotFound
+    }, {
         path: '/',
         name: 'Landing',
         component: Landing
@@ -32,9 +39,30 @@ const router = new Router({
         name: 'ServiceStatus',
         component: ServiceStatus,
         beforeEnter: AuthCheck
+    }, {
+        path: '/create-record',
+        name: 'CreateRecord',
+        component: CreateRecord,
+        beforeEnter: AuthCheck
+    }, {
+        path: '/profile',
+        name: 'Profile',
+        component: Profile,
+        beforeEnter: AuthCheck
     }]
 })
 
-router.afterEach(async(to, from, next) => {})
+router.beforeEach(async(to, from, next) => {
+    var found = router.options.routes.some(r => {
+        return r.name === to.name
+    })
+
+    if (!found) {
+        next('/not-found')
+        return
+    }
+
+    next()
+})
 
 export default router
