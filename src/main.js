@@ -2,19 +2,20 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import VueMoment from 'vue-moment'
 import { store } from './store'
+import * as filter from './filters'
 import Translate from './plugins/translate.js'
 import Validator from './plugins/validator.js'
-import * as filter from './filters'
 import VCalendar from 'v-calendar'
 import 'v-calendar/lib/v-calendar.min.css'
 Vue.use(VCalendar, {
     firstDayOfWeek: 1,
     maxTapDuration: 0
 })
-Vue.use(require('vue-moment'));
 Vue.use(Translate)
 Vue.use(Validator)
+Vue.use(VueMoment);
 
 require('./styles/index.less')
 

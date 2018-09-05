@@ -18,12 +18,14 @@
 
             <label for="started_at">{{ 'STARTED_AT' | translate }} <span class="required"></span></label>
             <v-date-picker
+                class="editable"
                 mode='single'
                 v-model='startedAt'>
             </v-date-picker>
 
             <label for="ended_at">{{ 'ENDED_AT' | translate }}</label>
             <v-date-picker
+                class="editable"
                 mode='single'
                 v-model='endedAt'>
             </v-date-picker>

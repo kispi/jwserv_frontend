@@ -1,8 +1,8 @@
 .service-card {
+    font-size: 16px;
     border: solid 1px @brand-primary;
     background: rgba(245, 245, 220, 0.5);
     margin: 16px;
-    height: 130px;
 }
 
 .service-card-header {
@@ -15,12 +15,11 @@
 }
 
 .row {
-    & input {
-        padding: 8px;
+    &
+    input, .popover-container {
         text-align: center;
         display: inline-block;
         border: none;
-        background: #fff;
         border-radius: 0;
 
         &:disabled {
