@@ -29,6 +29,36 @@
 
 .margin(25, 0px, 0);
 
+.margin2 (@label, @size: 1, @key:1) when (@size =< 100){
+    .m-@{key} {
+        margin: @size !important;
+    }
+    
+    .m-t-@{key} {
+        margin-top: @size !important;
+    }
+    
+    .m-b-@{key} {
+        margin-bottom: @size !important;
+    }
+    
+    .m-l-@{key} {
+        margin-left: @size !important;
+    }
+    
+    .m-r-@{key} {
+        margin-right: @size !important;
+    }
+    
+    .margin2(@label - 8; @size + 8; @key + 8);
+}
+
+.margin2(25, 0px, 0);
+
+.m-a {
+    margin: auto;
+}
+
 /*
  * Generate Padding Class
  * padding, padding-top, padding-bottom, padding-left, padding-right
@@ -59,6 +89,32 @@
 } 
 
 .padding(25, 0px, 0);
+
+.padding2 (@label, @size: 1, @key:1) when (@size =< 100){
+    .p-@{key} {
+        padding: @size !important;
+    }
+    
+    .p-t-@{key} {
+        padding-top: @size !important;
+    }
+    
+    .p-b-@{key} {
+        padding-bottom: @size !important;
+    }
+    
+    .p-l-@{key} {
+        padding-left: @size !important;
+    }
+    
+    .p-r-@{key} {
+        padding-right: @size !important; 
+    }
+    
+    .padding2(@label - 8; @size + 8; @key + 8);
+} 
+
+.padding2(25, 0px, 0);
 
 .size (@label, @size: 1, @key:1) when (@size =< 30){
     .s-@{key} {
@@ -148,16 +204,25 @@
 
 /*
  * Border Radius 
- */ 
-.brd-2 { border-radius: 2px; }
-.brd-4 { border-radius: 4px; }
-
-/*
- * Component Display Type
- */
-.display-inline-block {
-    display: inline-block;
-}
+ */  
+ .b-sm {
+     border-radius: 4px !important;
+ }
+ 
+ .b-md {
+     border-radius: 8px !important;
+ }
+ 
+ .b-lg {
+     border-radius: 16px !important;
+ }
+ 
+ .text-ellipsis {
+     overflow: hidden;
+     text-overflow: ellipsis;
+     display: -webkit-box;
+     -webkit-box-orient: vertical;
+  }
 
 /*
  * Bootstrap Grid

@@ -15,10 +15,17 @@
 }
 
 .row {
-    & div {
+    & input {
         padding: 8px;
         text-align: center;
         display: inline-block;
+        border: none;
+        background: #fff;
+        border-radius: 0;
+
+        &:disabled {
+            background: none;
+        }
 
         &.memo {
             width: 100%;

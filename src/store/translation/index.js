@@ -210,6 +210,38 @@ export default {
                 SAVE: {
                     en: "Save",
                     kr: "저장"
+                },
+                SUN: {
+                    en: "S",
+                    kr: "일"
+                },
+                MON: {
+                    en: "M",
+                    kr: "월"
+                },
+                TUE: {
+                    en: "T",
+                    kr: "화"
+                },
+                WED: {
+                    en: "W",
+                    kr: "수"
+                },
+                THU: {
+                    en: "T",
+                    kr: "목"
+                },
+                FRI: {
+                    en: "F",
+                    kr: "금"
+                },
+                SAT: {
+                    en: "S",
+                    kr: "토"
+                },
+                ALL: {
+                    en: "All",
+                    kr: "전체"
                 }
             }
         }

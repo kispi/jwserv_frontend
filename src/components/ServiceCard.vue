@@ -6,15 +6,15 @@
             <i class="zmdi zmdi-save" @click="edit = false" v-if="edit"></i>
         </div>
         <div class="row">
-            <div class="area col-xs-6">{{ record.area }}</div>
-            <div class="leader col-xs-6">{{ record.leaderName }}</div>
+            <input class="area col-xs-6" v-model="record.area" :disabled="!edit">
+            <input class="leader col-xs-6" v-model="record.leaderName" :disabled="!edit">
         </div>
         <div class="row">
-            <div class="start-at col-xs-6">{{ dayFormatStartedAt }}</div>
-            <div class="end-at col-xs-6">{{ dayFormatEndedAt }}</div>
+            <input class="start-at col-xs-6" v-model="dayFormatStartedAt" :disabled="!edit">
+            <input class="end-at col-xs-6" v-model="dayFormatEndedAt" :disabled="!edit">
         </div>
         <div class="row">
-            <div class="memo">{{ record.memo }}</div>
+            <input class="memo" v-model="record.memo" :disabled="!edit">
         </div>
     </div>
 </template>

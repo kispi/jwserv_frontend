@@ -1,6 +1,8 @@
 <template>
     <div class="service-status">
 
+        <Weeks @onDaySelected="onDaySelected"></Weeks>
+
         <transition name="fade" tag="div">
             <div class="search" v-if="showSearch">
                 <input class="query-value" v-selected v-model="keyword" ref="query-value" />
@@ -46,10 +48,11 @@
 import debounce from '@/modules';
 import Confirm from '@/components/modals/Confirm';
 import ServiceCard from '@/components/ServiceCard';
+import Weeks from '@/components/common/Weeks';
 import * as $http from "axios";
 
 export default {
-    components: { ServiceCard, Confirm },
+    components: { ServiceCard, Confirm, Weeks },
     name: 'ServiceStatus',
     data: () => ({
         serviceRecords: null,
@@ -105,8 +108,9 @@ export default {
                 limit: 20,
             }
 
-            if (this.keyword && this.keyword !== "" && this.selectedFilter)
+            if (this.keyword && this.keyword !== "" && this.selectedFilter) {
                 params.filter = this.selectedFilter.key + ":" + this.keyword;
+            }
 
             try {
                 const resp = await $http.get(
@@ -124,6 +128,9 @@ export default {
             } catch (e) {
                 console.error(e.response);
             }
+        },
+        onDaySelected(day) {
+            console.log(day);
         },
         onShowAskDelete(record) {
             this.showAskDelete = true;
@@ -184,8 +191,6 @@ export default {
 }
 
 .service-cards {
-    position: fixed;
-    overflow: scroll;
     top: 48px;
     bottom: 48px;
     left: 0;
