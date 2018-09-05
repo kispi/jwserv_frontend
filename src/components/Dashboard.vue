@@ -5,11 +5,8 @@
 </template>
 
 <script>
-import CommonMixin from "@/mixins/Common";
-
 export default {
     name: 'Status',
-    mixins: [CommonMixin],
     // components: {Stat},
     data: () => ({
         stats: null,
@@ -22,7 +19,7 @@ export default {
             this.stats = [
                 {
                     id: 0,
-                    title: this.translate("LOGIN")
+                    title: this.$translate("LOGIN")
                 }
             ]
         }

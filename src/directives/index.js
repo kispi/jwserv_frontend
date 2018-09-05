@@ -1,22 +1,22 @@
 import Vue from 'vue'
 import router from '../router'
 
-export const redirect = {
-    bind: function(el, binding) {
+Vue.directive('redirect', {
+    bind: (el, binding) => {
         el.addEventListener('click', function() {
             var next = binding.expression;
             next = next.replace(/\'/g, '')
             router.push(next)
         })
     }
-}
+})
 
-Vue.directive('alphaNumeric', {
+Vue.directive('phone', {
     bind: (el) => {
         el.addEventListener('keydown', e => {
-            if (e.keyCode === 9 || !e.key.match(/^[0-9a-zA-Z]/)) {
-                e.preventDefault();
-            }
+            setTimeout(function() {
+                el.value = el.value.replace(/[^0-9\-]/g, '');
+            }, 100);
         })
     }
 })

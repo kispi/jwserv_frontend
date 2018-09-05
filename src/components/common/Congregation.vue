@@ -11,7 +11,7 @@
         <transition name="modal">
             <AddCongregation @close="onAddCongregationConfirmed" v-if="showAddCongregation"></AddCongregation>
         </transition>
-        <div class="selected-congregation select" @click="toggleShowCongregations()">
+        <div class="selected-congregation select" :class="{ 'invalid': invalid }" @click="toggleShowCongregations()">
             <span v-if="congregation">{{ congregation.name }}</span>
             <span v-if="!congregation">{{ 'SELECT_CONGREGATION' | translate }}</span>
         </div>
@@ -33,6 +33,7 @@ import AddCongregation from "@/components/modals/AddCongregation";
 export default {
     components: { Alert, AddCongregation },
     name: 'Congregation',
+    props: ['invalid'],
     data: () => ({
         showCongregations: false,
         showAddCongregation: false,
@@ -63,7 +64,7 @@ export default {
             }
         },
         documentClick(e){
-            let el = this.$refs.congregation;
+            let el = this.$refs['congregation'];
             let target = e.target;
             if (el !== target && !el.contains(target)) {
                 this.showCongregations = false;

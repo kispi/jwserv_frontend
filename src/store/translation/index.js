@@ -5,7 +5,7 @@ import actions from './actions';
 export default {
     state: {
         translation: {
-            locale: window.localStorage.getItem("locale") || "en",
+            locale: window.localStorage.getItem("locale") || "kr",
             texts: {
                 JWSERV: {
                     en: "JWServ",
