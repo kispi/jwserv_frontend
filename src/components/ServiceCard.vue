@@ -1,6 +1,12 @@
 <template>
     <div class="service-card">
        
+        <transition name="modal">
+            <Alert @close="saveSuccess = false" v-if="saveSuccess">
+                <h3 slot="header" class="c-success">{{ 'SUCCESS_SAVE' | translate }}</h3>
+            </Alert>
+        </transition>
+
         <div class="row service-card-header">
             <i class="zmdi zmdi-delete m-r-10" @click="$emit('showAskDelete', record)"></i>
             <i class="zmdi zmdi-edit" @click="edit = true" v-if="!edit"></i>
@@ -21,14 +27,17 @@
 </template>
 
 <script>
+import Alert from "@/components/modals/Alert";
 import * as $http from "axios";
 
 export default {
     name: "ServiceCard",
+    components: { Alert },
     data: () => ({
         edit: false,
         started: null,
         ended: null,
+        saveSuccess: false,
     }),
     watch: {
         started: function() {
@@ -38,7 +47,7 @@ export default {
             this.record.endedAt = this.$moment(this.ended);
         }
     },
-    props: ["record"],
+    props: ['record'],
     created() {
     },
     computed: {
@@ -68,6 +77,7 @@ export default {
             try {
                 const resp = await $http.put('/serviceRecords/' + this.record.id, this.record);
                 this.edit = false;
+                this.saveSuccess = true;
             } catch (e) {
                 console.error(e);
             }

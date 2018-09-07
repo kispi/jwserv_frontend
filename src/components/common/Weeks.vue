@@ -1,19 +1,11 @@
 <template>
     <div class="weeks">
-        <div class="flex-row">
-            <span
-                class="p-16 f-700 f-20"
-                :class="{ 'selected': all.id === selected.id }"
-                @click="onSelectDayFilter(all)">
-                {{ all.name | translate }}
-            </span>
-        </div>
         <div class="flex-row week">
             <span
-                class="p-16 f-700 f-20"
                 v-for="obj in week"
                 :key="obj.id"
-                :class="{ 'selected': obj.id === selected.id }"
+                class="p-8 f-700 f-16"
+                :class="{ 'bg-secondary c-white': selected && obj.id === selected.id }"
                 @click="onSelectDayFilter(obj)">
                 {{ obj.name | translate }}
             </span>
@@ -25,9 +17,8 @@
 export default {
     name: 'Weeks',
     data: () => ({
-        all: { id: 0, name: 'ALL' },
-        selected: { id: 0, name: 'ALL' },
-        week: [
+        selected: null,
+        weekArray: [
             { id: 1, name: 'SUN' },
             { id: 2, name: 'MON' },
             { id: 3, name: 'TUE' },
@@ -35,11 +26,26 @@ export default {
             { id: 5, name: 'THU' },
             { id: 6, name: 'FRI' },
             { id: 7, name: 'SAT' },
-        ],
+        ]
     }),
+    computed: {
+        week() {
+            return this.weekArray.map(d => {
+                return { id: d.id, name: this.$translate(d.name)[0] }
+            })
+        } 
+    },
     methods: {
         onSelectDayFilter(day) {
-            this.selected = day;
+            if (!day) {
+                this.selected = null;
+            } else if (this.selected && day.id === this.selected.id)  {
+                this.selected = null;
+            } else {
+                this.selected = this.weekArray.find(d => {
+                    return d.id === day.id;
+                })
+            }
             this.$emit('onDaySelected', this.selected);
         }
     }
@@ -50,12 +56,13 @@ export default {
 <style lang="less" scoped>
 .flex-row {
     text-align: center;
-    background: rgba(0, 0, 0, 0.5);
-    color: rgba(255, 255, 255, 0.85);
-    margin: 0 16px 0 16px;
+    padding: 0 16px 0 16px;
+    width: 100%;
 
-    .selected {
-        background: #DC3545;
+    span {
+        max-width: 32px;
+        max-height: 32px;
+        border-radius: 50%;
     }
 }
 </style>

@@ -139,6 +139,10 @@ export default {
                     en: "Please give your email address",
                     kr: "다른 이메일을 사용해주세요"
                 },
+                SUCCESS_SAVE: {
+                    en: "Save Success",
+                    kr: "저장되었습니다"
+                },
                 INVALID_PASSWORD: {
                     en: "Invalid Password",
                     kr: "잘못된 비밀번호"
@@ -212,31 +216,31 @@ export default {
                     kr: "저장"
                 },
                 SUN: {
-                    en: "S",
+                    en: "Sunday",
                     kr: "일"
                 },
                 MON: {
-                    en: "M",
+                    en: "Monday",
                     kr: "월"
                 },
                 TUE: {
-                    en: "T",
+                    en: "Tuesday",
                     kr: "화"
                 },
                 WED: {
-                    en: "W",
+                    en: "Wednesday",
                     kr: "수"
                 },
                 THU: {
-                    en: "T",
+                    en: "Thursday",
                     kr: "목"
                 },
                 FRI: {
-                    en: "F",
+                    en: "Friday",
                     kr: "금"
                 },
                 SAT: {
-                    en: "S",
+                    en: "Saturday",
                     kr: "토"
                 },
                 ALL: {

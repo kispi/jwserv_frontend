@@ -41,6 +41,8 @@
             ></ServiceCard>
         </transition-group>
 
+        <Pagination :data="serviceRecords" :total="total"></Pagination>
+
     </div>
 </template>
 
@@ -48,16 +50,18 @@
 import debounce from '@/modules';
 import Confirm from '@/components/modals/Confirm';
 import ServiceCard from '@/components/ServiceCard';
+import Pagination from '@/components/common/Pagination'
 import Weeks from '@/components/common/Weeks';
 import * as $http from "axios";
 
 export default {
-    components: { ServiceCard, Confirm, Weeks },
+    components: { ServiceCard, Confirm, Weeks, Pagination },
     name: 'ServiceStatus',
     data: () => ({
         serviceRecords: null,
         showAskDelete: false,
         selectedRecord: null,
+        total: null,
         showSearch: false,
         showFilters: false,
         selectedFilter: null,
@@ -102,7 +106,7 @@ export default {
         this.reload();
     },
     methods: {
-        async reload() {
+        async reload(additionalFilter) {
             var params = {
                 orderby: "-id",
                 limit: 20,
@@ -112,11 +116,19 @@ export default {
                 params.filter = this.selectedFilter.key + ":" + this.keyword;
             }
 
+            if (additionalFilter) {
+                if (params.filter)
+                    params.filter += "," + additionalFilter;
+                else
+                    params.filter = additionalFilter;
+            }
+
             try {
                 const resp = await $http.get(
                     '/serviceRecords', { params }
                 );
                 this.serviceRecords = resp.data.data;
+                this.total = resp.data.total;
             } catch (e) {
                 console.error(e.response);
             }
@@ -130,7 +142,13 @@ export default {
             }
         },
         onDaySelected(day) {
-            console.log(day);
+            if (!day) {
+                this.reload();
+                return;
+            }
+            let dayFilter = 'dayname(created_at)' + ":" + day.name;
+            this.reload(dayFilter);
+
         },
         onShowAskDelete(record) {
             this.showAskDelete = true;
