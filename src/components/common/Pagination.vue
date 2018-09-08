@@ -43,8 +43,7 @@ export default {
         max-width: 32px;
         max-height: 32px;
         font-size: 16px;
-        line-height: 16px;
-        padding: 8px;
+        line-height: 32px;
         margin: 8px;
         border-radius: 50%;
     }

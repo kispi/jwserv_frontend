@@ -2,9 +2,15 @@
     <div class="create-record">
 
         <transition name="modal">
-            <Alert @close="postServiceRecordError = false" v-if="postServiceRecordError">
+            <Alert @close="createFailed = false" v-if="createFailed">
                 <h3 slot="header" class="c-danger">{{ errMsg | translate }}</h3>
                 <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
+            </Alert>
+        </transition>
+
+        <transition name="modal">
+            <Alert @close="createSuccess = false" v-if="createSuccess">
+                <h3 slot="header" class="c-success">{{ 'SUCCESS_SAVE' | translate }}</h3>
             </Alert>
         </transition>
 
@@ -14,7 +20,7 @@
 
         <form>
             <label for="area">{{ 'AREA' | translate }} <span class="required"></span></label>
-            <input class="input-block m-b-20 m-t-10" v-model="area" :placeholder="'AREA' | translate"/>
+            <input class="input-block m-b-20 m-t-10" v-model="area" :placeholder="'AREA' | translate" ref="area"/>
 
             <label for="started_at">{{ 'STARTED_AT' | translate }} <span class="required"></span></label>
             <v-date-picker
@@ -50,9 +56,9 @@ export default {
     components: { Alert, Confirm },
     name: 'CreateRecord',
     data: () => ({
-        postServiceRecordError: false,
+        createSuccess: false,
+        createFailed: false,
         errMsg: null,
-
         area: null,
         startedAt: new Date(),
         endedAt: new Date(),
@@ -95,9 +101,10 @@ export default {
                     url: '/serviceRecords',
                     data: payload
                 });
+                this.createSuccess = true;
             } catch (e) {
                 this.errMsg = e.response.data;
-                this.postServiceRecordError = true;
+                this.createFailed = true;
             }
         },
     }

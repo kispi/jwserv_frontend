@@ -4,7 +4,7 @@
             <span
                 v-for="obj in week"
                 :key="obj.id"
-                class="p-8 f-700 f-16"
+                class="f-700 f-16"
                 :class="{ 'bg-secondary c-white': selected && obj.id === selected.id }"
                 @click="onSelectDayFilter(obj)">
                 {{ obj.name | translate }}
@@ -63,6 +63,8 @@ export default {
     span {
         max-width: 32px;
         max-height: 32px;
+        line-height: 32px;
+        text-align: center;
         border-radius: 50%;
     }
 }
