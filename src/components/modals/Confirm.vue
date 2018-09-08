@@ -17,12 +17,14 @@
                 <div class="modal-footer">
                     <slot name="footer">
                         <div class="btn-container">
-                            <button class="btn btn-secondary modal-default-button" @click="$emit('close', 'cancel')">
-                                {{ 'CANCEL' | translate }}
-                            </button>
-                            <button class="btn btn-primary modal-default-button" @click="$emit('close', 'ok')">
-                                {{ 'OK' | translate }}
-                            </button>
+                            <slot name="buttons">
+                                <button class="btn btn-secondary modal-default-button" @click="$emit('close', 'cancel')">
+                                    {{ 'CANCEL' | translate }}
+                                </button>
+                                <button class="btn btn-primary modal-default-button" @click="$emit('close', 'ok')">
+                                    {{ 'OK' | translate }}
+                                </button>
+                            </slot>
                         </div>
                     </slot>
                 </div>

@@ -6,7 +6,7 @@
                 :key="index"
                 :class="{ 'bg-secondary c-white': selected === index }"
                 @click="onSelectIndex(index)">
-                {{ index }}
+                {{ index + 1 }}
             </span>
         </div>
     </div>
@@ -15,21 +15,17 @@
 <script>
 export default {
     name: 'Pagination',
-    props: ['data', 'total'],
-    data: () => ({
-        selected: 0
-    }),
+    props: ['limit', 'total', 'selected'],
     computed: {
         numberOfPages() {
-            if (this.total && this.data)
-                return Math.ceil(this.total / this.data.length);
-            return 0;
+            if (this.total && this.limit)
+                return Math.ceil(this.total / this.limit);
+            return 1;
         }
     },
     methods: {
         onSelectIndex(index) {
-            this.selected = index;
-            this.$emit('onServiceRecordPageSelected', this.selected);
+            this.$emit('onPageSelected', index);
         }
     }
 }
@@ -44,6 +40,8 @@ export default {
     span {
         min-width: 32px;
         min-height: 32px;
+        max-width: 32px;
+        max-height: 32px;
         font-size: 16px;
         line-height: 16px;
         padding: 8px;

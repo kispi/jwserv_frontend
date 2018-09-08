@@ -65,8 +65,16 @@ export default {
         },
     },
     mounted() {
-        this.started = new Date(this.record.startedAt.substring(0, 10));
-        this.ended = new Date(this.record.endedAt.substring(0, 10));
+        let started;
+        let ended;
+
+        if (this.record.startedAt)
+            started = new Date(this.record.startedAt.substring(0, 10));
+        if (this.record.endedAt)
+            ended = new Date(this.record.endedAt.substring(0, 10));
+        
+        this.started = started;
+        this.ended = ended;
     },
     methods: {
         dayToString(dayNum) {

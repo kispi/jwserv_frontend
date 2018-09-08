@@ -24,10 +24,10 @@
 
         <transition name="modal">
             <Confirm
-                :title="$options.filters.translate('CONFIRM_DELETE_SERVICE_RECORD')"
                 :text="$options.filters.translate('CONFIRM_DELETE_SERVICE_RECORD_TXT')"
                 v-if="showAskDelete"
                 v-on:close="onCloseAskDelete">
+                <h3 slot="header" class="c-danger">{{ 'CONFIRM_DELETE_SERVICE_RECORD' | translate }}</h3>
             </Confirm>
         </transition>
 
@@ -41,7 +41,11 @@
             ></ServiceCard>
         </transition-group>
 
-        <Pagination :data="serviceRecords" :total="total"></Pagination>
+        <Pagination
+            :limit="limit"
+            :total="total"
+            :selected="selectedPage"
+            v-on:onPageSelected="onPageSelected"></Pagination>
 
     </div>
 </template>
@@ -64,8 +68,12 @@ export default {
         total: null,
         showSearch: false,
         showFilters: false,
+        selectedDay: null,
+        selectedPage: null,
         selectedFilter: null,
+        limit: 20,
         keyword: null,
+        params: {}
     }),
     watch: {
         keyword: debounce(function(newVal) {
@@ -103,34 +111,28 @@ export default {
     },
     mounted() {
         this.selectedFilter = this.filters[0];
+        this.selectedPage = 0;
         this.reload();
     },
     methods: {
-        async reload(additionalFilter) {
-            var params = {
-                orderby: "-id",
-                limit: 20,
-            }
+        async reload() {
+            this.params.orderby = "-id";
+            this.params.limit = this.limit;
 
             if (this.keyword && this.keyword !== "" && this.selectedFilter) {
-                params.filter = this.selectedFilter.key + ":" + this.keyword;
-            }
-
-            if (additionalFilter) {
-                if (params.filter)
-                    params.filter += "," + additionalFilter;
-                else
-                    params.filter = additionalFilter;
+                this.params.filter = this.selectedFilter.key + ":" + this.keyword;
+            } else {
+                delete this.params.filter;
             }
 
             try {
                 const resp = await $http.get(
-                    '/serviceRecords', { params }
+                    '/serviceRecords' + (this.selectedDay ? '/' + this.$options.filters.translate(this.selectedDay.name, "en") : ""), { params: this.params }
                 );
                 this.serviceRecords = resp.data.data;
                 this.total = resp.data.total;
             } catch (e) {
-                console.error(e.response);
+                console.error(e);
             }
         },
         async deleteRecord() {
@@ -141,14 +143,16 @@ export default {
                 console.error(e.response);
             }
         },
+        onPageSelected(page) {
+            this.params.offset = page * this.params.limit;
+            this.selectedPage = page;
+            this.reload();
+        },
         onDaySelected(day) {
-            if (!day) {
-                this.reload();
-                return;
-            }
-            let dayFilter = 'dayname(created_at)' + ":" + day.name;
-            this.reload(dayFilter);
-
+            delete this.params.offset;
+            this.selectedDay = day;
+            this.onPageSelected(0);
+            this.reload();
         },
         onShowAskDelete(record) {
             this.showAskDelete = true;

@@ -58,6 +58,7 @@ export default {
     text-align: center;
     padding: 0 16px 0 16px;
     width: 100%;
+    justify-content: space-between;
 
     span {
         max-width: 32px;
