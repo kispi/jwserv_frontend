@@ -78,14 +78,8 @@ export default {
         }
     },
     created() {
-        this.init();
     },
     methods: {
-        init() {
-            this.initTime();
-        },
-        initTime() {
-        },
         async postServiceRecord() {
             try {
                 let payload = {
