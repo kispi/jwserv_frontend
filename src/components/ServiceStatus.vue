@@ -116,6 +116,7 @@ export default {
     },
     methods: {
         async reload() {
+            this.$store.dispatch('loading', true);
             this.params.orderby = "-id";
             this.params.limit = this.limit;
 
@@ -134,6 +135,7 @@ export default {
             } catch (e) {
                 console.error(e);
             }
+            this.$store.dispatch('loading', false);
         },
         async deleteRecord() {
             try {
