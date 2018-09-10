@@ -21,13 +21,10 @@ export default {
         Loading
     },
     name: 'App',
-    data: () => ({
-        loading: false
-    }),
-    mounted() {
-        this.$store.watch((state) => {
-            this.loading = state.Common.loading
-        })
+    computed: {
+        loading() {
+            return this.$store.getters.loading;
+        }
     },
     methods: {
         currentRoute() {
