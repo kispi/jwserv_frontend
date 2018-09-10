@@ -135,6 +135,10 @@
         "en": "Save Success",
         "kr": "저장되었습니다"
     },
+    "SUCCESS_DELETE": {
+        "en": "Delete Success",
+        "kr": "삭제되었습니다"
+    },
     "INVALID_PASSWORD": {
         "en": "Invalid Password",
         "kr": "잘못된 비밀번호"

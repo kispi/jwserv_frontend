@@ -1,0 +1,49 @@
+.toast-wrapper {
+    position: fixed;
+    top: @header-height;
+    left: 0px;
+    width: 100%;
+    z-index: 20;
+    pointer-events: none;
+
+    .toast {
+        pointer-events: initial;
+        margin: auto;
+        max-width: 320px;
+        background: @brand-primary;
+        padding: 12px 12px;
+        color: #fff;
+        font-weight: 700;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 16px;
+
+        &.success {
+            background: @brand-success;
+        }
+
+        &.warning {
+            background: @brand-warning;
+        }
+
+        &.error {
+            background: @brand-danger;
+        }
+
+        div {
+            flex: 1 1 0;
+        }
+
+        i {
+            flex: 0 0 auto;
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            font-size: 18px;
+        }
+    }
+}

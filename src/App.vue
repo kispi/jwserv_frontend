@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <Toast/>
         <Loading v-if="loading"/>
         <Header :currentRoute="currentRoute()"/>
         <div id="section">
@@ -12,13 +13,15 @@
 <script>
 import Header from "@/components/navigation/Header";
 import BottomNav from "@/components/navigation/BottomNav";
-import Loading from "@/components/common/Loading";
+import Loading from "@/components/app/Loading";
+import Toast from "@/components/app/Toast";
 
 export default {
     components: {
         BottomNav,
         Header,
-        Loading
+        Loading,
+        Toast
     },
     name: 'App',
     computed: {

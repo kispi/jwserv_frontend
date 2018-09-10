@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Loader from "@/components/common/Loader"
+import Loader from "@/components/app/Loader"
 export default {
     components: { Loader },
     name: 'Loading',

@@ -7,6 +7,7 @@ import { store } from './store'
 import * as filter from './filters'
 import Translate from './plugins/translate.js'
 import Validator from './plugins/validator.js'
+import * as Global from './plugins/global.js'
 import VCalendar from 'v-calendar'
 import 'v-calendar/lib/v-calendar.min.css'
 Vue.use(VCalendar, {
@@ -15,7 +16,10 @@ Vue.use(VCalendar, {
 })
 Vue.use(Translate)
 Vue.use(Validator)
-Vue.use(VueMoment);
+Vue.use(VueMoment)
+Object.keys(Global).forEach(k => {
+    Vue.use(Global[k])
+})
 
 require('./styles/index.less')
 
@@ -39,6 +43,7 @@ Vue.prototype.$http = axios
 
 import * as directives from './directives'
 Vue.filter('translate', filter.translate)
+Vue.filter('textToHTML', filter.textToHTML)
 
 Vue.prototype.$bus = new Vue({})
 

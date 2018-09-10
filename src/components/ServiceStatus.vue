@@ -34,6 +34,7 @@
         <transition-group name="list-complete" tag="div" class="service-cards">
             <ServiceCard
                 :record="record"
+                :role="user.role"
                 v-for="record in serviceRecords"
                 :key="record.id"
                 v-on:showAskDelete="onShowAskDelete"
@@ -54,14 +55,15 @@
 import debounce from '@/modules';
 import Confirm from '@/components/modals/Confirm';
 import ServiceCard from '@/components/ServiceCard';
-import Pagination from '@/components/common/Pagination'
-import Weeks from '@/components/common/Weeks';
+import Pagination from '@/components/app/Pagination'
+import Weeks from '@/components/app/Weeks';
 import * as $http from "axios";
 
 export default {
     components: { ServiceCard, Confirm, Weeks, Pagination },
     name: 'ServiceStatus',
     data: () => ({
+        user: null,
         serviceRecords: null,
         showAskDelete: false,
         selectedRecord: null,
@@ -73,7 +75,7 @@ export default {
         selectedFilter: null,
         limit: 20,
         keyword: null,
-        params: {}
+        params: {},
     }),
     watch: {
         keyword: debounce(function(newVal) {
@@ -110,13 +112,22 @@ export default {
         }
     },
     mounted() {
-        this.selectedFilter = this.filters[0];
-        this.selectedPage = 0;
-        this.reload();
+        if (!this.$store.getters.user.role)
+            this.$store.dispatch('getMe');
+
+        this.init();
     },
     methods: {
+        async init() {
+            if (this.$store.getters.user)
+                this.user = this.$store.getters.user;
+
+            this.selectedFilter = this.filters[0];
+            this.selectedPage = 0;
+            this.reload();
+        },
         async reload() {
-            this.$store.dispatch('loading', true);
+            this.$loading(true);
             this.params.orderby = "-id";
             this.params.limit = this.limit;
 
@@ -135,12 +146,13 @@ export default {
             } catch (e) {
                 console.error(e);
             }
-            this.$store.dispatch('loading', false);
+            this.$loading(false);
         },
         async deleteRecord() {
             try {
                 const resp = await $http({ method: 'delete', url: '/serviceRecords/' + this.selectedRecord.id });
                 this.reload();
+                this.$toast.success("SUCCESS_DELETE");
             } catch (e) {
                 console.error(e.response);
             }
@@ -207,7 +219,7 @@ export default {
 
 .list-complete-enter, .list-complete-leave-to {
     opacity: 0;
-    transform: translateX(320px);
+    transform: translateX(-320px);
 }
 
 .list-complete-leave-active {

@@ -13,3 +13,9 @@ export const translate = (key, temporaryLocale) => {
     }
     return ($store.getters.translation.texts[key] || {})[locale] || key;
 }
+
+export const textToHTML = (text) => {
+    if (text) {
+        return text.replace(/\n/g, "<br>");
+    }
+}
