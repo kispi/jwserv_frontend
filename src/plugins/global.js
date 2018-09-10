@@ -15,7 +15,6 @@ export const Toast = {
 
         Vue.prototype.$toast = {
             success(msg, dismiss) {
-                console.log(msg);
                 $store.dispatch("setToast", payload(msg, dismiss, "bg-success"));
             },
             error(msg, dismiss) {

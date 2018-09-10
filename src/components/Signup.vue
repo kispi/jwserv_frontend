@@ -139,7 +139,6 @@ export default {
         validate(key) {
             let obj = {
                 email: () => {
-                    console.log(this.$validate);
                     this.valid.email = this.$validate.email(this.email);
                 },
                 password: () => {
@@ -154,12 +153,6 @@ export default {
             }
             obj[key]();
             this.valid.all = this.valid.email && this.valid.password && this.valid.name && this.valid.congregation;
-        },
-        validateForm() {
-            this.validate("email");
-            this.validate("password");
-            this.validate("name");
-            this.validate("congregation");
         },
         onCongregationSelected(congregation) {
             this.congregation = congregation;

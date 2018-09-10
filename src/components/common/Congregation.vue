@@ -89,6 +89,7 @@ export default {
                     .then(r => {
                         this.reload();
                         this.showCongregations = true;
+                        this.$toast.success("SUCCESS_SAVE");
                     })
                     .catch(e => {
                         this.addCongregationError = true;

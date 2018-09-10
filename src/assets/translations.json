@@ -131,6 +131,10 @@
         "en": "Please give your email address",
         "kr": "다른 이메일을 사용해주세요"
     },
+    "ERROR_SAVE": {
+        "en": "Save Failed",
+        "kr": "저장에 실패하였습니다"
+    },
     "SUCCESS_SAVE": {
         "en": "Save Success",
         "kr": "저장되었습니다"
@@ -202,6 +206,10 @@
     "ENDED_AT": {
         "en": "Ended",
         "kr": "완료일"
+    },
+    "NOT_COMPLETED": {
+        "en": "Incomplete",
+        "kr": "미완료"
     },
     "MEMO": {
         "en": "Memo",
