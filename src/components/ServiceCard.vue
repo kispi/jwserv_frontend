@@ -33,10 +33,10 @@ export default {
     }),
     watch: {
         started: function() {
-            this.record.startedAt = this.$moment(this.started);
+            this.record.startedAt = new Date(this.$moment(this.started).format("YYYY-MM-DD"));
         },
         ended: function() {
-            this.record.endedAt = this.$moment(this.ended);
+            this.record.endedAt = new Date(this.$moment(this.ended).format("YYYY-MM-DD"));
         }
     },
     props: ['record', 'role'],

@@ -1,5 +1,5 @@
 input {
-    border: 1px solid rgba(0, 0, 0, 0.25);
+    border: 1px solid @border-gray;
     border-radius: 4px;
     font-size: @font-size-large + 2px;
     padding: 8px;
@@ -45,4 +45,8 @@ input {
 
 .invalid {
     border: solid 1px @brand-danger !important;
+}
+
+.b-gray {
+    border: @border-gray;
 }

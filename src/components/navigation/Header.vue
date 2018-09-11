@@ -85,6 +85,7 @@ export default {
                 locale = (locale === "kr" ? "en" : "kr");
             }
             this.$store.dispatch("setLocale", locale);
+            this.$toast.success("LANG_CHANGED");
         },
         onClickBack() {
             this.$router.go(-1);

@@ -23,6 +23,10 @@
         "en": "Cancel",
         "kr": "취소"
     },
+    "LANG_CHANGED": {
+        "en": "Language Changed",
+        "kr": "언어가 변경되었습니다"
+    },
     "CONFIRM_DELETE_SERVICE_RECORD": {
         "en": "Delete the Service Record",
         "kr": "봉사 기록 삭제"
@@ -130,6 +134,10 @@
     "ERROR_EMAIL_ALREADY_EXISTS_TXT": {
         "en": "Please give your email address",
         "kr": "다른 이메일을 사용해주세요"
+    },
+    "ERROR_RECORD_ALREADY_EXISTS": {
+        "en": "Duplicated record exists for the same date",
+        "kr": "동일 날짜에 같은 구역기록이 이미 존재합니다"
     },
     "ERROR_SAVE": {
         "en": "Save Failed",

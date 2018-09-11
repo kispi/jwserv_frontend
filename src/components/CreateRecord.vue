@@ -10,15 +10,15 @@
             <input
                 class="input-block m-b-20 m-t-10"
                 :class="{ 'invalid b-sm': !valid.area }"
-                v-model="area"
+                v-model="record.area"
                 :placeholder="'AREA' | translate"
                 ref="area"/>
 
             <label for="leader_name">{{ 'LEADER_NAME' | translate }} <span class="required"></span></label>
             <input 
                 class="input-block m-b-20 m-t-10"
-                :class="{ 'invalid b-sm': !valid.leader }"
-                v-model="leader"
+                :class="{ 'invalid b-sm': !valid.leaderName }"
+                v-model="record.leaderName"
                 :placeholder="'LEADER_NAME' | translate"/>
 
             <div class="flex-row">
@@ -31,17 +31,17 @@
             <div class="flex-row">
                 <v-date-picker
                     class="editable m-r-8 m-b-20 start-at"
-                    mode='single'
-                    v-model='startedAt'>
+                    mode="single"
+                    v-model="startedAt">
                 </v-date-picker>
                 <v-date-picker
                     class="editable m-b-20 end-at"
-                    mode='single'
-                    v-model='endedAt'>
+                    mode="single"
+                    v-model="endedAt">
                 </v-date-picker>
             </div>
 
-            <div class="flex-row" style="float: right; direction: rtl;">
+            <div class="flex-row pull-right" style="direction: rtl;">
                 <Checkbox :class="{ 'flex-wrap': true }" v-model="incomplete" :text="'NOT_COMPLETED'"/>
                 <div class="flex-fill m-r-8" style="line-height: 24px;">
                     {{ 'NOT_COMPLETED' | translate }}
@@ -49,7 +49,7 @@
             </div>
 
             <label for="memo">{{ 'MEMO' | translate }}</label>
-            <input class="input-block m-b-30 m-t-10" v-model="memo" :placeholder="'MEMO' | translate"/>
+            <input class="input-block m-b-30 m-t-10" v-model="record.memo" :placeholder="'MEMO' | translate"/>
 
             <button
                 type="button"
@@ -70,42 +70,62 @@ export default {
     components: { Checkbox },
     data: () => ({
         errMsg: null,
-        area: null,
-        startedAt: new Date(),
-        endedAt: new Date(),
-        leader: null,
-        memo: null,
+        /* this.startedAt, this.endedAt exist for pass the data to v-calendar. */
+        startedAt: null,
+        endedAt: null,
+        record: {
+            area: null,
+            leaderName: null,
+            memo: null,
+            startedAt: null,
+            endedAt: null,
+        },
         valid: {
             area: false,
-            leader: false,
+            leaderName: false,
             all: false
         },
         incomplete: false,
     }),
     watch: {
         incomplete: function() {
-            if (this.incomplete) {
-                this.endedAt = undefined;
-            } else {
-                this.endedAt = this.startedAt;
+            this.endedAt = this.record.endedAt = this.incomplete ? undefined : this.record.startedAt;
+        },
+        record: {
+            handler(val) {
+                this.validate("area");
+                this.validate("leaderName");
+            },
+            deep: true
+        },
+        startedAt: function(newVal) {  
+            this.record.startedAt = new Date(this.$moment(newVal).format("YYYY-MM-DD"));
+            if (this.record.startedAt >= this.record.endedAt) {
+                this.record.endedAt = this.record.startedAt;
             }
-        },
-        area: function() {
-            this.validate("area");
-        },
-        leader: function() {
-            this.validate("leader");
-        },
-        startedAt: function(newVal) {
+
             if (newVal >= this.endedAt) {
                 this.endedAt = newVal;
             }
         },
         endedAt: function(newVal) {
+            if (!newVal) {
+                return
+            }
+
+            this.record.endedAt = new Date(this.$moment(newVal).format("YYYY-MM-DD"));
+            if (this.record.endedAt <= this.record.startedAt) {
+                this.record.startedAt = this.record.endedAt;
+            }
+
             if (newVal <= this.startedAt) {
                 this.startedAt = newVal;
             }
         }
+    },
+    mounted() {
+        this.startedAt = this.record.startedAt = new Date(this.$moment().format("YYYY-MM-DD"));
+        this.endedAt = this.record.endedAt = this.record.startedAt;
     },
     methods: {
         async postServiceRecord() {
@@ -117,36 +137,33 @@ export default {
                 return false;
             }
             try {
-                let endedAt = (this.endedAt ? this.$moment(this.endedAt) : undefined);
-                let payload = {
-                    area: this.area,
-                    startedAt: this.$moment(this.startedAt),
-                    endedAt: endedAt,
-                    leaderName: this.leader,
-                    memo: this.memo
-                }
-                
                 const resp = await $http({
                     method: 'post',
                     url: '/serviceRecords',
-                    data: payload
+                    data: this.record
                 });
                 this.$toast.success("SUCCESS_SAVE");
+                this.$refs['area'].focus();
             } catch (e) {
-                this.$toast.error("ERROR_SAVE");
+                if (e.response && e.response.data === "RECORD_ALREADY_EXISTS") {
+                    this.$toast.error("ERROR_" + e.response.data);
+                } else {
+                    console.log(e);
+                    this.$toast.error("ERROR_SAVE");
+                }
             }
         },
         validate(key) {
             let obj = {
                 area: () => {
-                    this.valid.area = this.area && this.area.length > 0;
+                    this.valid.area = this.record.area && this.record.area.length > 0;
                 },
-                leader: () => {
-                    this.valid.leader = this.leader && this.leader.length > 0;
+                leaderName: () => {
+                    this.valid.leaderName = this.record.leaderName && this.record.leaderName.length > 0;
                 },
             }
             obj[key]();
-            this.valid.all = this.valid.area && this.valid.leader;
+            this.valid.all = this.valid.area && this.valid.leaderName;
         },
     }
 }
