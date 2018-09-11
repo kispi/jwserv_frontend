@@ -96,7 +96,7 @@ export default {
                     key: "leaderName__icontains",
                     title: "LEADER_NAME"
                 }, {
-                    key: "area",
+                    key: "area__icontains",
                     title: "AREA"
                 }, {
                     key: "startedAt__icontains",
@@ -105,7 +105,7 @@ export default {
                     key: "endedAt__icontains",
                     title: "ENDED_AT"
                 }, {
-                    key: "memo",
+                    key: "memo__icontains",
                     title: "MEMO"
                 }
             ]
@@ -179,6 +179,7 @@ export default {
             }
         },
         selectFilter(filter) {
+            this.keyword = null;
             this.showFilters = false;
             this.selectedFilter = filter;
             this.$refs['query-value'].focus();

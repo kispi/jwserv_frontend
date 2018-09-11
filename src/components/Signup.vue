@@ -22,6 +22,13 @@
                 v-on:onCongregationSelected="onCongregationSelected"
             ></Congregation>
 
+            <label for="name">{{ 'NAME' | translate }} <span class="required"></span></label>
+            <input
+                :class="{ 'invalid': !valid.name }"
+                class="input-block m-b-20 m-t-10"
+                v-model="name"
+                :placeholder="'NAME' | translate"/>
+
             <label for="email">{{ 'EMAIL' | translate }} <span class="required"></span></label>
             <input
                 :class="{ 'invalid': !valid.email }"
@@ -36,13 +43,6 @@
                 class="input-block m-b-20 m-t-10"
                 v-model="password"
                 :placeholder="'PASSWORD' | translate"/>
-
-            <label for="name">{{ 'NAME' | translate }} <span class="required"></span></label>
-            <input
-                :class="{ 'invalid': !valid.name }"
-                class="input-block m-b-20 m-t-10"
-                v-model="name"
-                :placeholder="'NAME' | translate"/>
 
             <label for="phone">{{ 'PHONE' | translate }}</label>
             <input
@@ -75,7 +75,7 @@ export default {
     data: () => ({
         signupError: false,
         errMsg: null,
-        email: "",
+        email: null,
         password: null,
         name: null,
         congregation: null,

@@ -12,8 +12,8 @@
             <AddCongregation @close="onAddCongregationConfirmed" v-if="showAddCongregation"></AddCongregation>
         </transition>
         <div class="selected-congregation select" :class="{ 'invalid': invalid }" @click="toggleShowCongregations()">
-            <span v-if="congregation">{{ congregation.name }}</span>
-            <span v-if="!congregation">{{ 'SELECT_CONGREGATION' | translate }}</span>
+            <span v-if="selectedCongregation">{{ selectedCongregation.name }}</span>
+            <span v-if="!selectedCongregation">{{ 'SELECT_CONGREGATION' | translate }}</span>
         </div>
         
         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
@@ -33,15 +33,20 @@ import AddCongregation from "@/components/modals/AddCongregation";
 export default {
     components: { Alert, AddCongregation },
     name: 'Congregation',
-    props: ['invalid'],
+    props: ['invalid', 'congregation'],
     data: () => ({
         showCongregations: false,
         showAddCongregation: false,
         addCongregationError: false,
         congregations: null,
-        congregation: null,
+        selectedCongregation: null,
         errMsg: null,
     }),
+    watch: {
+        congregation() {
+            this.selectedCongregation = this.congregation;
+        }
+    },
     mounted() {
         this.init();
     },
@@ -54,6 +59,9 @@ export default {
     methods: {
         async init() {
             this.reload();
+            if (this.congregation) {
+                this.selectedCongregation = this.congregation;
+            }
         },
         async reload() {
             try {
@@ -75,8 +83,8 @@ export default {
         },
         onSelectCongregation(congregation) {
             this.showCongregations = false;
-            this.congregation = congregation;
-            this.$emit('onCongregationSelected', this.congregation);
+            this.selectedCongregation = congregation;
+            this.$emit('onCongregationSelected', this.selectedCongregation);
         },
         onAddCongregationClick() {
             this.showCongregations = false;
