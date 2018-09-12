@@ -8,6 +8,7 @@ import ServiceStatus from '@/components/ServiceStatus'
 import CreateRecord from '@/components/CreateRecord'
 import Dashboard from '@/components/Dashboard'
 import Profile from '@/components/Profile'
+import Users from '@/components/Users'
 import NotFound from '@/components/NotFound'
 
 Vue.use(Router)
@@ -43,6 +44,11 @@ const router = new Router({
         path: '/create-record',
         name: 'CreateRecord',
         component: CreateRecord,
+        beforeEnter: AuthCheck
+    }, {
+        path: '/users',
+        name: 'Users',
+        component: Users,
         beforeEnter: AuthCheck
     }, {
         path: '/profile',

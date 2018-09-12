@@ -2,7 +2,7 @@
     <div class="modal-mask" @click="emitIfMaskIsClicked($event)">
         <div class="modal-wrapper">
             <div class="modal-container">
-                <div class="modal-header">
+                <div class="modal-header text-uppercase">
                     <slot name="header">
                         <h3>{{ title }}</h3>
                     </slot>
@@ -18,7 +18,7 @@
                     <slot name="footer">
                         <div class="btn-container">
                             <slot name="buttons">
-                                <button class="btn btn-secondary modal-default-button" @click="$emit('close', 'cancel')">
+                                <button class="btn btn-secondary modal-default-button" @click="$emit('close')">
                                     {{ 'CANCEL' | translate }}
                                 </button>
                                 <button class="btn btn-primary modal-default-button" @click="$emit('close', 'ok')">

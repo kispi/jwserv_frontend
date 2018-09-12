@@ -32,13 +32,11 @@
                 <v-date-picker
                     class="editable m-r-8 m-b-20 start-at"
                     mode="single"
-                    v-model="startedAt">
-                </v-date-picker>
+                    v-model="startedAt"></v-date-picker>
                 <v-date-picker
                     class="editable m-b-20 end-at"
                     mode="single"
-                    v-model="endedAt">
-                </v-date-picker>
+                    v-model="endedAt"></v-date-picker>
             </div>
 
             <div class="flex-row pull-right" style="direction: rtl;">

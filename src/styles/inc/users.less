@@ -1,0 +1,28 @@
+table {
+    display: contents;
+
+    td {
+        padding: 8px;
+        white-space: nowrap;
+
+        &:nth-child(1) {
+            text-align: center;
+        }
+    }
+    
+    thead {
+        background: @brand-primary;
+        color: #fff;
+        text-align: center;
+    }
+
+    tbody {
+        tr:nth-child(even) {
+            background: rgba(0, 0, 0, 0.05);
+        }
+    
+        tr:nth-child(odd) {
+            background: rgba(0, 0, 0, 0.10);
+        }
+    }
+}

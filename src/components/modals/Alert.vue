@@ -2,7 +2,7 @@
     <div class="modal-mask" @click="emitIfMaskIsClicked($event)">
         <div class="modal-wrapper">
             <div class="modal-container">
-                <div class="modal-header">
+                <div class="modal-header text-uppercase">
                     <slot name="header">
                     default header
                     </slot>

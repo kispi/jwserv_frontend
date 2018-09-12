@@ -35,6 +35,14 @@
         "en": "Are you sure you want to delete the service record?",
         "kr": "정말로 해당 봉사 기록을 삭제할까요?"
     },
+    "CONFIRM_CHANGE_ROLE": {
+        "en": "Change role",
+        "kr": "권한 변경"
+    },
+    "CONFIRM_CHANGE_ROLE_TXT": {
+        "en": "Do you want to change the role of the user?",
+        "kr": "해당 유저의 권한을 변경할까요?"
+    },
     "STATUS": {
         "en": "Status",
         "kr": "현황보기"
@@ -46,6 +54,10 @@
     "PROFILE": {
         "en": "Profile",
         "kr": "내 정보"
+    },
+    "USERS": {
+        "en": "Users",
+        "kr": "사용자"
     },
     "LOGOUT": {
         "en": "Logout",
@@ -143,6 +155,14 @@
         "en": "Save Failed",
         "kr": "저장에 실패하였습니다"
     },
+    "ERROR_NEEDS_ADMIN": {
+        "en": "No Admin",
+        "kr": "관리자가 필요합니다."
+    },
+    "ERROR_NEEDS_ADMIN_TXT": {
+        "en": "Your congregation needs at least 1 admin",
+        "kr": "최소 한 명의 관리자는 필요합니다"
+    },
     "SUCCESS_SAVE": {
         "en": "Save Success",
         "kr": "저장되었습니다"
@@ -171,9 +191,33 @@
         "en": "Password",
         "kr": "비밀번호"
     },
+    "NEW_PASSWORD": {
+        "en": "New Password (Optional)",
+        "kr": "새 비밀번호 (필요시)"
+    },
     "NAME": {
         "en": "Name",
         "kr": "이름"
+    },
+    "ROLE": {
+        "en": "Role",
+        "kr": "권한"
+    },
+    "ADMIN": {
+        "en": "Admin",
+        "kr": "관리자"
+    },
+    "WRITER": {
+        "en": "Writer",
+        "kr": "기록"
+    },
+    "PUBLIC": {
+        "en": "Public",
+        "kr": "열람"
+    },
+    "LAST_ACTIVITY": {
+        "en": "Last Login",
+        "kr": "최종 로그인"
     },
     "CONGREGATION": {
         "en": "Congregation",

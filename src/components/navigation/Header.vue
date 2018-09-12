@@ -25,13 +25,14 @@ export default {
     name: 'Header',
     data: () => ({
         showSidebar: false,
+        user: null,
     }),
     mounted() {
+        this.init();
     },
     computed: {
         menu() {
-            var menu = [
-                {
+            var menu = [{
                     key: "STATUS",
                     route: "service-status"
                 }, {
@@ -40,10 +41,16 @@ export default {
                 }, {
                     key: "PROFILE",
                     route: "profile"
-                }, {
-                    key: "LOGOUT",
-                }
-            ];
+                }];
+            if (this.user.role === "admin") {
+                menu.push({
+                    key: "USERS",
+                    route: "users"
+                })    
+            }
+            menu.push({
+                key: "LOGOUT",
+            });
             menu.forEach(m => {
                 m.title = this.$options.filters.translate(m.key);
             })
@@ -66,6 +73,12 @@ export default {
         document.removeEventListener('click', this.collapse)
     },
     methods: {
+        async init() {
+            this.user = this.$store.getters.user;
+            if (!this.user.role) {
+                await this.$store.dispatch('getMe');
+            }
+        },
         collapse(e) {
             if (e.target.className === 'nav-bar-button mobile-menu') {
                 this.showSidebar = !this.showSidebar;

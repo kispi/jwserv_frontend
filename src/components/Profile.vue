@@ -4,34 +4,34 @@
         <form>
             <label for="congregation">{{ 'CONGREGATION' | translate }} </label>
             <Congregation
-                :congregation="congregation"
+                :congregation="user.congregation"
                 class="m-b-20 m-t-10 no-click disabled"
             ></Congregation>
 
             <label for="name">{{ 'NAME' | translate }} </label>
             <input
                 class="input-block m-b-20 m-t-10 disabled"
-                v-model="name"
+                v-model="user.name"
                 disabled/>
 
             <label for="email">{{ 'EMAIL' | translate }} </label>
             <input
                 class="input-block m-b-20 m-t-10 disabled"
-                v-model="email"
+                v-model="user.email"
                 disabled/>
 
-            <label for="password">{{ 'PASSWORD' | translate }} </label>
+            <label for="password">{{ 'NEW_PASSWORD' | translate }} </label>
             <input
                 type="password"
                 :class="{ 'invalid': !valid.password }"
                 class="input-block m-b-20 m-t-10"
-                v-model="password"
+                v-model="user.password"
                 :placeholder="'PASSWORD' | translate"/>
 
             <label for="phone">{{ 'PHONE' | translate }}</label>
             <input
                 class="input-block m-b-30 m-t-10"
-                v-model="phone"
+                v-model="user.phone"
                 :placeholder="'PHONE' | translate"
                 v-phone/>
 
@@ -55,21 +55,19 @@ export default {
     },
     name: 'Profile',
     data: () => ({
-        id: null,
-        email: null,
-        password: null,
-        name: null,
-        congregation: null,
-        phone: null,
+        user: {},
         valid: {
             password: false,
             all: false,
         },
     }),
     watch: {
-        password: function() {
-            this.validate("password");
-        },
+        user: {
+            handler() {
+                this.validate("password");
+            },
+            deep: true
+        }
     },
     mounted() {
         this.init();
@@ -80,12 +78,8 @@ export default {
         },
         async reload() {
             await this.$store.dispatch('getMe');
-            let user = this.$store.getters.user;
-            this.id = user.id;
-            this.name = user.name;
-            this.email = user.email;
-            this.phone = user.phone;
-            this.congregation = user.congregation;
+            this.user = this.$store.getters.user;
+            this.user.password = null;
         },
         async save() {
             if (!this.valid.all) {
@@ -95,13 +89,8 @@ export default {
                 }, 500);
                 return false;
             }
-            let payload = {
-                id: this.id,
-                password: this.password,
-                phone: this.phone
-            };
             try {
-                await $http.put('/users/' + this.id, payload);
+                await $http.put('/users/' + this.user.id, this.user);
                 this.$toast.success("SUCCESS_SAVE");
             } catch (e) {
                 console.error(e);
@@ -112,7 +101,7 @@ export default {
         validate(key) {
             let obj = {
                 password: () => {
-                    this.valid.password = this.$validate.password(this.password);
+                    this.valid.password = this.$validate.password(this.user.password);
                 },
             }
             obj[key]();

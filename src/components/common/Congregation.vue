@@ -11,6 +11,7 @@
         <transition name="modal">
             <AddCongregation @close="onAddCongregationConfirmed" v-if="showAddCongregation"></AddCongregation>
         </transition>
+        
         <div class="selected-congregation select" :class="{ 'invalid': invalid }" @click="toggleShowCongregations()">
             <span v-if="selectedCongregation">{{ selectedCongregation.name }}</span>
             <span v-if="!selectedCongregation">{{ 'SELECT_CONGREGATION' | translate }}</span>

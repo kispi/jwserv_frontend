@@ -4,12 +4,16 @@ import router from './router'
 import axios from 'axios'
 import VueMoment from 'vue-moment'
 import { store } from './store'
-import * as filter from './filters'
 import Translate from './plugins/translate.js'
 import Validator from './plugins/validator.js'
 import * as Global from './plugins/global.js'
 import VCalendar from 'v-calendar'
 import 'v-calendar/lib/v-calendar.min.css'
+import * as directives from './directives'
+import * as filter from './filters'
+Object.keys(filter).forEach(k => {
+    Vue.filter(k, filter[k])
+})
 Vue.use(VCalendar, {
     firstDayOfWeek: 1,
     maxTapDuration: 0
@@ -40,11 +44,6 @@ axios.defaults.transformResponse = [function(response) {
 }];
 axios.defaults.baseURL = process.env.API_URL
 Vue.prototype.$http = axios
-
-import * as directives from './directives'
-Vue.filter('translate', filter.translate)
-Vue.filter('textToHTML', filter.textToHTML)
-
 Vue.prototype.$bus = new Vue({})
 
 new Vue({

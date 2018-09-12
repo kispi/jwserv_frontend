@@ -34,3 +34,11 @@ export const Loading = {
         }
     }
 }
+
+export const Copy = {
+    install(Vue) {
+        Vue.prototype.$copy = function(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        }
+    }
+}
