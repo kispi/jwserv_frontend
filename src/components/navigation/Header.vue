@@ -107,7 +107,7 @@ export default {
             let keys = this.menu.map(m => {
                 return m.route;
             })
-            return this.menu[keys.indexOf(path.substring(1))].key;
+            return (this.menu[keys.indexOf(path.substring(1))] || []).key;
         },
         collapse(e) {
             if (e.target.className === 'nav-bar-button mobile-menu') {

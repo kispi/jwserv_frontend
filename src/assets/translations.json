@@ -43,6 +43,10 @@
         "en": "Do you want to change the role of the user?",
         "kr": "해당 유저의 권한을 변경할까요?"
     },
+    "EXPORT": {
+        "en": "Export",
+        "kr": "추출"
+    },
     "STATUS": {
         "en": "Status",
         "kr": "현황보기"

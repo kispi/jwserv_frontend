@@ -1,5 +1,5 @@
 <template>
-    <div class="bottom-nav display-flex">
+    <div class="bottom-nav">
         <img class="logo pull-right" src="../../assets/logo.png" v-redirect="'dashboard'">
         <div class>
 

@@ -83,13 +83,9 @@ export default {
                 await this.$store.dispatch("getMe");
             }
 
-            let params = {
-                filter: "congregation__id:" + this.me.congregation.id
-            };
-
             try {
-                const resp = await $http.get("/users", { params });
-                this.users = resp.data.data;
+                await this.$store.dispatch('getUsers');
+                this.users = this.$store.getters.users;
                 this.users.sort(function(a, b) {
                     return a.name.localeCompare(b.name);
                 })
@@ -109,7 +105,7 @@ export default {
         },
         async save(user) {
             try {
-                await $http.put('users/' + user.id, user);
+                const resp = await this.$store.dispatch('changeUserRole', user);
                 this.$toast.success("SUCCESS_SAVE");
             } catch (e) {
                 if (e.response && e.response.data === "ERROR_NEEDS_ADMIN") {
