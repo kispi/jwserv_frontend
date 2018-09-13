@@ -3,6 +3,15 @@
 
         <Weeks @onDaySelected="onDaySelected"></Weeks>
 
+        <div class="menu flex-rtl m-16">
+            <button class="btn btn-default flex-row flex-ltr" @click="excelExport()">
+                <span class="flex-wrap">
+                    <img class="m-t-8 m-r-8" src="../assets/excel.png" style="width: 24px; height: 24px">
+                </span>
+                <span class="flex-fill text-uppercase">{{ 'EXPORT' | translate }}</span>
+            </button>
+        </div>
+
         <transition name="fade" tag="div">
             <div class="search" v-if="showSearch">
                 <input class="query-value" v-selected v-model="keyword" ref="query-value" />
@@ -155,6 +164,16 @@ export default {
                 this.$toast.success("SUCCESS_DELETE");
             } catch (e) {
                 console.error(e.response);
+            }
+        },
+        async excelExport() {
+            try {
+                let payload = {
+                    all: true
+                };
+                const resp = await $http.post('export/serviceRecords', payload);
+            } catch (e) {
+                console.error(e);
             }
         },
         onPageSelected(page) {
