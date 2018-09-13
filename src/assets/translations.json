@@ -68,8 +68,8 @@
         "kr": "계정 생성"
     },
     "ADD_CONGREGATION_TXT": {
-        "en": "Type the name of congregation to add.\n\nRole of the first account of the congregation will become 'admin', while accounts after it become 'read'. 'admin' can change the role of accounts.",
-        "kr": "등록할 회중의 이름을 적어주십시오.\n\n회중의 첫 계정에는 관리자 권한이 부여됩니다. 동일 회중에 그 이후에 등록된 계정들의 처음 권한은 '열람'이며, 관리자는 이 계정들의 권한을 변경할 수 있습니다."
+        "en": "Type the name of congregation to add.\n\nRole of the first account of the congregation will become 'admin', while accounts after it become 'read'. 'admin' can change the role of accounts",
+        "kr": "등록할 회중의 이름을 적어주십시오.\n\n회중의 첫 계정에는 관리자 권한이 부여됩니다. 동일 회중에 그 이후에 등록된 계정들의 처음 권한은 '열람'이며, 관리자는 이 계정들의 권한을 변경할 수 있습니다"
     },
     "ADD_CONGREGATION_PLACEHOLDER": {
         "en": "(EX: 경기성남북부)",
@@ -157,7 +157,7 @@
     },
     "ERROR_NEEDS_ADMIN": {
         "en": "No Admin",
-        "kr": "관리자가 필요합니다."
+        "kr": "관리자가 필요합니다"
     },
     "ERROR_NEEDS_ADMIN_TXT": {
         "en": "Your congregation needs at least 1 admin",
@@ -236,12 +236,12 @@
         "kr": "회중 선택"
     },
     "SIGNUP_REQUIRED": {
-        "en": "is required field.",
-        "kr": "는 필수 입력 항목입니다."
+        "en": "is required field",
+        "kr": "는 필수 입력 항목입니다"
     },
     "SIGNUP_SECURE": {
-        "en": "Password is encrypted, so administrator cannot know it.",
-        "kr": "비밀번호는 암호화되어 저장되므로 관리자도 알 수 없습니다."
+        "en": "Password is encrypted, so administrator cannot know it",
+        "kr": "비밀번호는 암호화되어 저장되므로 관리자도 알 수 없습니다"
     },
     "LEADER_NAME": {
         "en": "Leader",

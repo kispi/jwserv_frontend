@@ -11,7 +11,7 @@
                 <div class="modal-body">
                     <slot name="body">
                         <p>{{ 'ADD_CONGREGATION_TXT' | translate }}</p>
-                        <input class="input-block" v-model="congregationName" :placeholder="$options.filters.translate('ADD_CONGREGATION_PLACEHOLDER')" v-on:keydown.enter.prevent="onConfirmCongregation(congregationName)">
+                        <input class="input-block" v-model="congregationName" :placeholder="$options.filters.translate('ADD_CONGREGATION_PLACEHOLDER')" v-on:keydown.enter.prevent="onConfirmCongregation($event.target.value)">
                     </slot>
                 </div>
 

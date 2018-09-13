@@ -1,5 +1,5 @@
 <template>
-    <div class="users text-center">
+    <div class="users">
 
         <transition name="modal">
             <Confirm

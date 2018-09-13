@@ -2,7 +2,10 @@
     <div class="header" ref="header">
         <div class="nav-bar-controls">
             <div class="pull-left">
-                <a class="back" @click="onClickBack()" v-if="showBack"><i class="zmdi zmdi-arrow-left"></i></a>
+                <a class="back text-uppercase" @click="onClickBack()" v-if="showBack">
+                    <i class="zmdi zmdi-arrow-left"></i>
+                    <span class="title">{{ routeTitle(current.path) | translate }}</span>
+                </a>
             </div>
             <div class="pull-right">
                 <a class="nav-bar-button mobile-search" v-if="showSearch"></a>
@@ -13,7 +16,12 @@
 
         <transition enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
             <ul class="right-side-bar shadow" v-if="showSidebar && !showAllMenues">
-                <li v-for="item in menu" :key="item.title" @click="onButton(item)">{{ item.title }}</li>
+                <li
+                    v-for="item in menu"
+                    :key="item.title"
+                    :class="{ 'selected': current.path.includes(item.route) }"
+                    @click="onButton(item)">{{ item.title }}
+                </li>
             </ul>
         </transition>
     </div>
@@ -24,11 +32,19 @@ export default {
     props: ['currentRoute'],
     name: 'Header',
     data: () => ({
+        current: {},
         showSidebar: false,
         user: null,
     }),
     mounted() {
         this.init();
+    },
+    watch: {
+        $route (to, from) {
+            if (to.path) {
+                this.current = to;
+            }
+        }
     },
     computed: {
         menu() {
@@ -74,10 +90,24 @@ export default {
     },
     methods: {
         async init() {
-            this.user = this.$store.getters.user;
-            if (!this.user.role) {
-                await this.$store.dispatch('getMe');
+            try {
+                await this.$store.dispatch('loadAuthToken');
+                this.user = this.$store.getters.user;
+                if (!this.user.role) {
+                    await this.$store.dispatch('getMe');
+                }
+            } catch (e) {
+                console.error(e);
             }
+        },
+        routeTitle(path) {
+            if (!path) {
+                return;
+            }
+            let keys = this.menu.map(m => {
+                return m.route;
+            })
+            return this.menu[keys.indexOf(path.substring(1))].key;
         },
         collapse(e) {
             if (e.target.className === 'nav-bar-button mobile-menu') {
@@ -114,6 +144,9 @@ export default {
             } else {
                 this.$router.push("/" + item.route);
             }
+        },
+        selected(cur) {
+            console.log(cur);
         }
     }
 }

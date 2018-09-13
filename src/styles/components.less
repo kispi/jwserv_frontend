@@ -24,9 +24,16 @@
     z-index: 10;
 
     .back {
+        cursor: pointer;
+        font-size: 24px;
+
         i {
-            font-size: 28px;
-            padding: 10px 24px;
+            padding: 12px;
+            padding-left: 16px;
+        }
+
+        span {
+
         }
     }
 
@@ -49,8 +56,14 @@
             border-bottom: dotted 1px rgba(0, 0, 0, 0.1);
             cursor: pointer;
 
-            &:hover {
-                background: rgba(0, 0, 0, 0.05);
+            &:not(.selected):hover {
+                background: #eee;
+            }
+
+            &.selected {
+                background: @brand-secondary;
+                opacity: 0.75;
+                color: #fff;
             }
         }
     }
