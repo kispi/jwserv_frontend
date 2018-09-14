@@ -171,7 +171,7 @@ export default {
                 let payload = {
                     all: true
                 };
-                const resp = await $http.post('export/serviceRecords', payload);
+                this.$download('export/serviceRecords', 'area.csv');
             } catch (e) {
                 console.error(e);
             }
