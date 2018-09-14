@@ -1,10 +1,29 @@
 <template>
     <div class="service-status">
 
+        <transition name="modal">
+            <Confirm
+                :text="$options.filters.translate('CONFIRM_DELETE_SERVICE_RECORD_TXT')"
+                v-if="showAskDelete"
+                v-on:close="onCloseAskDelete">
+                <h3 slot="header" class="c-danger">{{ 'CONFIRM_DELETE_SERVICE_RECORD' | translate }}</h3>
+            </Confirm>
+        </transition>
+
+        <transition name="modal">
+            <Options
+                :buttons="exportOptions"
+                v-if="showOptions"
+                v-on:close="onCloseExportOptions">
+                <h3 slot="header" class="c-primary text-center">{{ 'EXPORT_SERVICE_RECORD' | translate }}</h3>
+
+            </Options>
+        </transition>
+
         <Weeks @onDaySelected="onDaySelected"></Weeks>
 
         <div class="menu m-16 flex-rtl">
-            <button class="btn btn-default flex-ltr p-l-40 p-relative" @click="excelExport()">
+            <button class="btn btn-default flex-ltr p-l-40 p-relative" @click="showOptions = true">
                 <img class="m-t-8 m-r-8 display-inline-block p-absolute" src="../assets/excel.png" style="width: 24px; height: 24px; left: 8px;">
                 <span class="text-uppercase display-inline-block">{{ 'EXPORT' | translate }}</span>
             </button>
@@ -27,15 +46,6 @@
                     </transition>
                 </div>
             </div>
-        </transition>
-
-        <transition name="modal">
-            <Confirm
-                :text="$options.filters.translate('CONFIRM_DELETE_SERVICE_RECORD_TXT')"
-                v-if="showAskDelete"
-                v-on:close="onCloseAskDelete">
-                <h3 slot="header" class="c-danger">{{ 'CONFIRM_DELETE_SERVICE_RECORD' | translate }}</h3>
-            </Confirm>
         </transition>
 
         <transition-group name="list-complete" tag="div" class="service-cards">
@@ -61,18 +71,20 @@
 <script>
 import debounce from '@/modules';
 import Confirm from '@/components/modals/Confirm';
+import Options from '@/components/modals/Options';
 import ServiceCard from '@/components/ServiceCard';
 import Pagination from '@/components/app/Pagination'
 import Weeks from '@/components/app/Weeks';
 import * as $http from "axios";
 
 export default {
-    components: { ServiceCard, Confirm, Weeks, Pagination },
+    components: { ServiceCard, Confirm, Options, Weeks, Pagination },
     name: 'ServiceStatus',
     data: () => ({
         user: null,
         serviceRecords: null,
         showAskDelete: false,
+        showOptions: false,
         selectedRecord: null,
         total: null,
         showSearch: false,
@@ -116,6 +128,21 @@ export default {
                     title: "MEMO"
                 }
             ]
+        },
+        exportOptions() {
+            return [{
+                title: "CSV",
+                class: "btn-primary btn-block",
+                value: "csv"
+            }, {
+                title: "EXCEL",
+                class: "btn-secondary btn-block",
+                value: "excel"
+            }, {
+                title: "HTML",
+                class: "btn-accent btn-block",
+                value: "html"
+            }]
         }
     },
     mounted() {
@@ -164,15 +191,27 @@ export default {
                 console.error(e.response);
             }
         },
-        async excelExport() {
+        async excelExport(type) {
             try {
-                let payload = {
+                let params = {
                     all: true
                 };
-                this.$download('export/serviceRecords', 'area.csv');
+                params.type = type;
+                if (type === "html") {
+                    $http.get('export/serviceRecords', { params })
+                    .then(r => {
+                        console.log(r.data);
+                    })
+                } else if (["csv", "excel"].indexOf(type) >= 0) {
+                    this.$download('export/serviceRecords', 'area.csv');
+                }
             } catch (e) {
                 console.error(e);
             }
+        },
+        onCloseExportOptions(e) {
+            this.showOptions = false;
+            this.excelExport(e);
         },
         onPageSelected(page) {
             this.params.offset = page * this.params.limit;

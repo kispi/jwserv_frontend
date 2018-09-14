@@ -47,6 +47,10 @@
         "en": "Export",
         "kr": "추출"
     },
+    "EXPORT_SERVICE_RECORD": {
+        "en": "Export service record",
+        "kr": "봉사 기록 추출"
+    },
     "STATUS": {
         "en": "Status",
         "kr": "현황보기"
