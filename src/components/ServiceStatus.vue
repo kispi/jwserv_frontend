@@ -3,12 +3,10 @@
 
         <Weeks @onDaySelected="onDaySelected"></Weeks>
 
-        <div class="menu flex-rtl m-16">
-            <button class="btn btn-default flex-row flex-ltr" @click="excelExport()">
-                <span class="flex-wrap">
-                    <img class="m-t-8 m-r-8" src="../assets/excel.png" style="width: 24px; height: 24px">
-                </span>
-                <span class="flex-fill text-uppercase">{{ 'EXPORT' | translate }}</span>
+        <div class="menu m-16 flex-rtl">
+            <button class="btn btn-default flex-ltr p-l-40 p-relative" @click="excelExport()">
+                <img class="m-t-8 m-r-8 display-inline-block p-absolute" src="../assets/excel.png" style="width: 24px; height: 24px; left: 8px;">
+                <span class="text-uppercase display-inline-block">{{ 'EXPORT' | translate }}</span>
             </button>
         </div>
 
