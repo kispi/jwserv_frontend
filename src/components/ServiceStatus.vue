@@ -98,7 +98,7 @@ export default {
     }),
     watch: {
         keyword: debounce(function(newVal) {
-            this.reload(newVal);
+            this.onKeyword(newVal);
         }, 500)
     },
     created() {
@@ -212,6 +212,11 @@ export default {
         onCloseExportOptions(e) {
             this.showOptions = false;
             this.excelExport(e);
+        },
+        onKeyword(keyword) {
+            delete this.params.offset;
+            this.selectedPage = 0;
+            this.reload();
         },
         onPageSelected(page) {
             this.params.offset = page * this.params.limit;
