@@ -5,6 +5,7 @@ import Landing from '@/components/Landing'
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
 import ServiceStatus from '@/components/ServiceStatus'
+import ServiceStatusExport from '@/components/ServiceStatusExport'
 import CreateRecord from '@/components/CreateRecord'
 import Dashboard from '@/components/Dashboard'
 import Profile from '@/components/Profile'
@@ -39,6 +40,11 @@ const router = new Router({
         path: '/service-status',
         name: 'ServiceStatus',
         component: ServiceStatus,
+        beforeEnter: AuthCheck
+    }, {
+        path: '/service-status/export',
+        name: 'ServiceStatusExport',
+        component: ServiceStatusExport,
         beforeEnter: AuthCheck
     }, {
         path: '/create-record',

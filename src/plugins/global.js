@@ -46,10 +46,11 @@ export const Copy = {
 
 export const Download = {
     install(Vue) {
-        Vue.prototype.$download = async function(url, filename) {
+        Vue.prototype.$download = async function(url, params, filename) {
             return await $http({
                 url: url,
                 method: 'GET',
+                params: params,
                 responseType: 'blob'
             }).then(response => {
                 const url = window.URL.createObjectURL(new Blob([response.data]));

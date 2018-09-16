@@ -196,14 +196,12 @@ export default {
                 let params = {
                     all: true
                 };
-                params.type = type;
+                params.exportType = type;
                 if (type === "html") {
-                    $http.get('export/serviceRecords', { params })
-                    .then(r => {
-                        console.log(r.data);
-                    })
+                    // this.$router.push("service-status/export");
+                    window.open('#/service-status/export', '_blank');
                 } else if (["csv", "excel"].indexOf(type) >= 0) {
-                    this.$download('export/serviceRecords', 'area.csv');
+                    this.$download('export/serviceRecords', params, 'area.csv');
                 }
             } catch (e) {
                 console.error(e);
@@ -251,7 +249,6 @@ export default {
                 this.showSearch = !this.showSearch;
                 return;
             }
-
             this.showSearch = [
                 'nav-bar-button mobile-search',
                 'query-value',
@@ -267,14 +264,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-.fade-enter-active, .fade-leave-active {
-    transition: opacity .3s;
-}
-
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
-}
-
 .list-complete-item {
     transition: all 0.5s;
 }
