@@ -1,12 +1,10 @@
 <template>
     <div class="signup">
 
-        <transition name="modal">
-            <Alert @close="signupError = false" v-if="signupError">
-                <h3 slot="header" class="c-danger">{{ errMsg | translate }}</h3>
-                <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
-            </Alert>
-        </transition>
+        <Alert @close="signupError = false" v-if="signupError">
+            <h3 slot="header" class="c-danger">{{ errMsg | translate }}</h3>
+            <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
+        </Alert>
 
         <div class="header-section m-b-40">
             <div class="m-b-20"><span class="required"></span> {{ 'SIGNUP_REQUIRED' | translate }}</div>

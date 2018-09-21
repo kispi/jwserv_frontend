@@ -1,12 +1,10 @@
 <template>
     <div class="login">
         
-        <transition name="modal">
-            <Alert @close="loginError = false" v-if="loginError">
-                <h3 slot="header" class="c-danger">{{ errMsg | translate }}</h3>
-                <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
-            </Alert>
-        </transition>
+        <Alert @close="loginError = false" v-if="loginError">
+            <h3 slot="header" class="c-danger">{{ errMsg | translate }}</h3>
+            <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
+        </Alert>
 
         <div class="m-t-30 m-b-30 f-30 f-700">{{ 'WELCOME' | translate }}</div>
         <input class="input-block m-b-10" v-model="email" :placeholder="'EMAIL' | translate" v-on:keyup.enter="onClickLogin"/>

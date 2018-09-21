@@ -1,16 +1,12 @@
 <template>
     <div class="congregation" ref="congregation">
 
-        <transition name="modal">
-            <Alert @close="addCongregationError = false" v-if="addCongregationError">
-                <h3 slot="header" class="c-danger">{{ errMsg | translate }}</h3>
-                <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
-            </Alert>
-        </transition>
-        
-        <transition name="modal">
-            <AddCongregation @close="onAddCongregationConfirmed" v-if="showAddCongregation"></AddCongregation>
-        </transition>
+        <Alert @close="addCongregationError = false" v-if="addCongregationError">
+            <h3 slot="header" class="c-danger">{{ errMsg | translate }}</h3>
+            <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
+        </Alert>
+
+        <AddCongregation @close="onAddCongregationConfirmed" v-if="showAddCongregation"></AddCongregation>
         
         <div class="selected-congregation select" :class="{ 'invalid': invalid }" @click="toggleShowCongregations()">
             <span v-if="selectedCongregation">{{ selectedCongregation.name }}</span>

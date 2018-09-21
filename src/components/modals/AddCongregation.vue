@@ -1,35 +1,37 @@
 <template>
-    <div class="modal-mask" @click="emitIfMaskIsClicked($event)">
-        <div class="modal-wrapper">
-            <div class="modal-container">
-                <div class="modal-header">
-                    <slot name="header">
-                        <h3>{{ 'ADD_CONGREGATION' | translate }}</h3>
-                    </slot>
-                </div>
+    <transition name="modal">
+        <div class="modal-mask" @click="emitIfMaskIsClicked($event)">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <slot name="header">
+                            <h3>{{ 'ADD_CONGREGATION' | translate }}</h3>
+                        </slot>
+                    </div>
 
-                <div class="modal-body">
-                    <slot name="body">
-                        <p>{{ 'ADD_CONGREGATION_TXT' | translate }}</p>
-                        <input class="input-block" v-model="congregationName" :placeholder="$options.filters.translate('ADD_CONGREGATION_PLACEHOLDER')" v-on:keydown.enter.prevent="onConfirmCongregation($event.target.value)">
-                    </slot>
-                </div>
+                    <div class="modal-body">
+                        <slot name="body">
+                            <p>{{ 'ADD_CONGREGATION_TXT' | translate }}</p>
+                            <input class="input-block" v-model="congregationName" :placeholder="$options.filters.translate('ADD_CONGREGATION_PLACEHOLDER')" v-on:keydown.enter.prevent="onConfirmCongregation($event.target.value)">
+                        </slot>
+                    </div>
 
-                <div class="modal-footer">
-                    <slot name="footer">
-                        <div class="btn-container">
-                            <button type="button" class="btn btn-primary modal-default-button" @click="onConfirmCongregation(congregationName)">
-                                {{ 'CONFIRM' | translate }}
-                            </button>
-                            <button type="button" class="btn btn-default modal-default-button m-r-10" @click="$emit('close')">
-                                {{ 'CANCEL' | translate }}
-                            </button>
-                        </div>
-                    </slot>
+                    <div class="modal-footer">
+                        <slot name="footer">
+                            <div class="btn-container">
+                                <button type="button" class="btn btn-primary modal-default-button" @click="onConfirmCongregation(congregationName)">
+                                    {{ 'CONFIRM' | translate }}
+                                </button>
+                                <button type="button" class="btn btn-default modal-default-button m-r-10" @click="$emit('close')">
+                                    {{ 'CANCEL' | translate }}
+                                </button>
+                            </div>
+                        </slot>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script>

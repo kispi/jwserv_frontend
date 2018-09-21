@@ -1,24 +1,19 @@
 <template>
     <div class="service-status">
 
-        <transition name="modal">
-            <Confirm
-                :text="$options.filters.translate('CONFIRM_DELETE_SERVICE_RECORD_TXT')"
-                v-if="showAskDelete"
-                v-on:close="onCloseAskDelete">
-                <h3 slot="header" class="c-danger">{{ 'CONFIRM_DELETE_SERVICE_RECORD' | translate }}</h3>
-            </Confirm>
-        </transition>
+        <Confirm
+            :text="$options.filters.translate('CONFIRM_DELETE_SERVICE_RECORD_TXT')"
+            v-if="showAskDelete"
+            v-on:close="onCloseAskDelete">
+            <h3 slot="header" class="c-danger">{{ 'CONFIRM_DELETE_SERVICE_RECORD' | translate }}</h3>
+        </Confirm>
 
-        <transition name="modal">
-            <Options
-                :buttons="exportOptions"
-                v-if="showOptions"
-                v-on:close="onCloseExportOptions">
-                <h3 slot="header" class="c-primary text-center">{{ 'EXPORT_SERVICE_RECORD' | translate }}</h3>
-
-            </Options>
-        </transition>
+        <Options
+            :buttons="exportOptions"
+            v-if="showOptions"
+            v-on:close="onCloseExportOptions">
+            <h3 slot="header" class="c-primary text-center">{{ 'EXPORT_SERVICE_RECORD' | translate }}</h3>
+        </Options>
 
         <Weeks @onDaySelected="onDaySelected"></Weeks>
 
@@ -339,8 +334,8 @@ export default {
                 background: white;
                 list-style-type: none;
 
-                &:hover {
-                    background: rgba(0, 0, 0, 0.05);
+                &:not(.selected):hover {
+                    background: #eee;
                 }
             }
         }

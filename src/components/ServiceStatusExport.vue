@@ -7,14 +7,14 @@
             </button>
         </div> -->
 
-        <div class="m-b-30 table-wrapper" v-for="(page, pageIndex) in pages" :key="pageIndex">
+        <div class="m-b-55 table-wrapper" v-for="(page, pageIndex) in pages" :key="pageIndex">
             <table>
                 <tr v-for="(tr, trIndex) in page" :key="trIndex" v-if="!empty(tr)">
                     <td
                         v-bind:colspan="shouldBeSpaned(tdIndex, trIndex)"
                         v-for="(td, tdIndex) in tr"
-                        :key="tdIndex"
-                        :class="hasContent(tr)">
+                        :class="hasContent(td)"
+                        :key="tdIndex">
                         {{ td || "-" }}
                     </td>
                 </tr>
@@ -89,12 +89,8 @@ export default {
             })
             return data;
         },
-        hasContent(tr) {
-            if (tr.some(td => {
-                return td !== "";
-            })) {
-                return "has-content";
-            };
+        hasContent(td) {
+            return (td === "" ? "" : "has-content");
         },
         empty(tr) {
             if (this.showEmpty) {
@@ -116,15 +112,26 @@ export default {
 .table-wrapper {
     clear: left;
     float: left;
+    display: block;
 }
 
 table {
-    display: block;
     font-size: 12px;
     color: #000;
+    display: contents;
 
-    tr:not(:first-child) td {
-        border: solid 1px rgba(0, 0, 0, 0.5);
+    tr {
+        &:first-child td {
+            border-top: double 3px rgba(0, 0, 0, 0.5);
+        }
+
+        &:last-child td {
+            border-bottom: double 3px rgba(0, 0, 0, 0.5);
+        }
+
+        &:not(:first-child) td {
+            border-top: solid 1px rgba(0, 0, 0, 0.5);
+        }
     }
 
     td {
@@ -134,6 +141,19 @@ table {
         &:not(.has-content) {
             color: #fff;
         }
+
+        &:first-child {
+            border-left: double 3px rgba(0, 0, 0, 0.5);
+        }
+
+        &:last-child {
+            border-right: double 3px rgba(0, 0, 0, 0.5);
+        }
+
+        &:not(:first-child) {
+            border-left: solid 1px rgba(0, 0, 0, 0.5);
+        }
+
     }
 }
 </style>

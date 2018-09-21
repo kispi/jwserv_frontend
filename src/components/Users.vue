@@ -1,21 +1,17 @@
 <template>
     <div class="users">
 
-        <transition name="modal">
-            <Confirm
-                :text="$options.filters.translate('CONFIRM_CHANGE_ROLE_TXT')"
-                v-if="showAskChangeRole"
-                v-on:close="onConfirmChangeRole">
-                <h3 slot="header" class="c-warning">{{ 'CONFIRM_CHANGE_ROLE' | translate }}</h3>
-            </Confirm>
-        </transition>
+        <Confirm
+            :text="$options.filters.translate('CONFIRM_CHANGE_ROLE_TXT')"
+            v-if="showAskChangeRole"
+            v-on:close="onConfirmChangeRole">
+            <h3 slot="header" class="c-warning">{{ 'CONFIRM_CHANGE_ROLE' | translate }}</h3>
+        </Confirm>
 
-        <transition name="modal">
-            <Alert @close="showNoAdminAlert = false" v-if="showNoAdminAlert">
-                <h3 slot="header" class="c-danger">{{ errMsg | translate }}</h3>
-                <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
-            </Alert>
-        </transition>
+        <Alert @close="showNoAdminAlert = false" v-if="showNoAdminAlert">
+            <h3 slot="header" class="c-danger">{{ errMsg | translate }}</h3>
+            <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
+        </Alert>
 
         <table>
             <thead class="text-uppercase">

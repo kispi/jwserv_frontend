@@ -2,7 +2,7 @@
     <div id="app">
         <Toast/>
         <Loading v-if="loading"/>
-        <Header :currentRoute="currentRoute()"/>
+        <Header v-if="showHeader()" :currentRoute="currentRoute()"/>
         <div id="section">
             <router-view/>
         </div>
@@ -33,8 +33,11 @@ export default {
         currentRoute() {
             return this.$router.currentRoute;
         },
+        showHeader() {
+            return ['ServiceStatusExport'].indexOf(this.$router.currentRoute.name) === -1;
+        },
         showNav() {
-            return this.$router.currentRoute.name !== 'Login';
+            return ['Login', 'ServiceStatusExport'].indexOf(this.$router.currentRoute.name) === -1;
         }
     }
 }
