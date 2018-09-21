@@ -47,6 +47,14 @@
         "en": "Print",
         "kr": "인쇄"
     },
+    "HELP_EXPORT": {
+        "en": "How to print?",
+        "kr": "어떻게 인쇄하나요?"
+    },
+    "HELP_EXPORT_TXT": {
+        "en": "Based on Chrome.\n\n1. Right click the page\n2. Click 'Print'\n3. + More\n4. Set 'whitespace' as 'default'\n5. Print",
+        "kr": "크롬을 기준으로 합니다.\n\n1. 페이지를 마우스로 우클릭\n2. '인쇄' 클릭\n3. + 설정 더보기 클릭\n4. '여백'을 '기본값'으로 설정\n5. 인쇄"
+    },
     "EXPORT": {
         "en": "Export",
         "kr": "추출"

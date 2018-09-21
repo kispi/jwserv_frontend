@@ -1,11 +1,12 @@
 <template>
     <div class="service-status-export" id="print-area">
-        <!-- <div class="menu m-16 flex-rtl">
-            <button class="btn btn-default flex-ltr p-l-40 p-relative" @click="print()">
-                <img class="m-t-8 m-r-8 display-inline-block p-absolute" src="../assets/excel.png" style="width: 24px; height: 24px; left: 8px;">
-                <span class="text-uppercase display-inline-block">{{ 'PRINT' | translate }}</span>
-            </button>
-        </div> -->
+
+        <Alert @close="showHelp = false" v-if="showHelp">
+            <h3 class="c-primary" slot="header">
+                {{ 'HELP_EXPORT' | translate }}
+            </h3>
+            <div class="pre-line" slot="body">{{ 'HELP_EXPORT_TXT' | translate }}</div>
+        </Alert>
 
         <div class="m-b-55 table-wrapper" v-for="(page, pageIndex) in pages" :key="pageIndex">
             <table>
@@ -21,25 +22,26 @@
             </table>
         </div>
     </div>
+
 </template>
 
 <script>
-import Pagination from '@/components/app/Pagination'
+import Alert from '@/components/modals/Alert'
 import * as $http from "axios";
 
 export default {
-    components: { Pagination },
+    components: { Alert },
     name: 'ServiceStatusExport',
     data: () => ({
         pages: [],
         showEmpty: true,
+        showHelp: false,
     }),
-    created() {
-    },
-    computed: {
-    },
     mounted() {
         this.init();
+        setTimeout(() => {
+            this.showHelp = true;
+        }, 500);
     },
     methods: {
         async init() {
