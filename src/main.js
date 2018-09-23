@@ -25,7 +25,7 @@ Object.keys(Global).forEach(k => {
     Vue.use(Global[k])
 })
 
-require('./styles/index.less')
+require('./assets/styles/index.less')
 
 Vue.config.productionTip = false
 axios.defaults.transformResponse = [function(response) {

@@ -8,7 +8,7 @@
             <div class="pre-line" slot="body">{{ 'HELP_EXPORT_TXT' | translate }}</div>
         </Alert>
 
-        <div class="m-b-55 table-wrapper" v-for="(page, pageIndex) in pages" :key="pageIndex">
+        <div class="table-wrapper" v-for="(page, pageIndex) in pages" :key="pageIndex">
             <table>
                 <tr v-for="(tr, trIndex) in page" :key="trIndex" v-if="!empty(tr)">
                     <td
@@ -110,11 +110,18 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" scoped>
+<style lang="less">
+#section {
+    margin: 8px;
+    padding: 0;
+    font-family: 'Dotum';
+}
+
 .table-wrapper {
     clear: left;
     float: left;
     display: block;
+    margin-bottom: 54px;
 }
 
 table {

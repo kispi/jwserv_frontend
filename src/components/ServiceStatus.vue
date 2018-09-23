@@ -19,7 +19,7 @@
 
         <div class="menu m-16 flex-rtl">
             <button class="btn btn-default flex-ltr p-l-40 p-relative" @click="showOptions = true">
-                <img class="m-t-8 m-r-8 display-inline-block p-absolute" src="../assets/excel.png" style="width: 24px; height: 24px; left: 8px;">
+                <img class="m-t-8 m-r-8 display-inline-block p-absolute" src="../assets/images/excel.png" style="width: 24px; height: 24px; left: 8px;">
                 <span class="text-uppercase display-inline-block">{{ 'EXPORT' | translate }}</span>
             </button>
         </div>
