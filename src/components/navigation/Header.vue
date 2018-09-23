@@ -8,18 +8,17 @@
                 </a>
             </div>
             <div class="pull-right">
-                <a class="nav-bar-button mobile-search" v-if="showSearch"></a>
                 <a class="nav-bar-button mobile-lang" @click="changeLang()"></a>
                 <a class="nav-bar-button mobile-menu" v-if="!showAllMenues"></a>
             </div>
         </div>
 
         <transition enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
-            <ul class="right-side-bar shadow" v-if="showSidebar && !showAllMenues">
+            <ul class="right-side-bar shadow" v-show="showSidebar && !showAllMenues">
                 <li
                     v-for="item in menu"
                     :key="item.title"
-                    :class="{ 'selected': current.path.includes(item.route) }"
+                    :class="{ 'selected': (current.path && current.path.includes(item.route)) }"
                     @click="onButton(item)">{{ item.title }}
                 </li>
             </ul>
@@ -37,7 +36,9 @@ export default {
         user: null,
     }),
     mounted() {
-        this.init();
+        if (["Login", "Signup"].indexOf(this.currentRoute.name) === -1) {
+            this.init();
+        }                
     },
     watch: {
         $route (to, from) {
@@ -58,7 +59,7 @@ export default {
                     key: "PROFILE",
                     route: "profile"
                 }];
-            if (this.user.role === "admin") {
+            if (this.user && this.user.role === "admin") {
                 menu.push({
                     key: "USERS",
                     route: "users"
@@ -75,30 +76,23 @@ export default {
         showAllMenues() {
             return (this.currentRoute.name === "Login") || (this.currentRoute.name === "Signup");
         },
-        showSearch() {
-            return (this.currentRoute.name === "ServiceStatus")
-        },
         showBack() {
             return (this.currentRoute.name !== "Login")
         }
     },
     created() {
-        document.addEventListener('click', this.collapse)
+        document.addEventListener('click', this.collapse);
+        this.$bus.$on("onLogin", this.init);
     },
     destroyed() {
         document.removeEventListener('click', this.collapse)
     },
     methods: {
         async init() {
-            try {
-                await this.$store.dispatch('loadAuthToken');
-                this.user = this.$store.getters.user;
-                if (!this.user.role) {
-                    await this.$store.dispatch('getMe');
-                }
-            } catch (e) {
-                console.error(e);
+            if (!this.user) {
+                await this.$store.dispatch('getMe');
             }
+            this.user = this.$store.getters.user;
         },
         routeTitle(path) {
             if (!path) {
@@ -145,9 +139,6 @@ export default {
                 this.$router.push("/" + item.route);
             }
         },
-        selected(cur) {
-            console.log(cur);
-        }
     }
 }
 </script>

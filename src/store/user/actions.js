@@ -17,9 +17,12 @@ export default {
     },
 
     async signIn({ commit, dispatch }, payload) {
-        const resp = await $http.post('signInLocal', payload)
-        if (resp.data === "NON_EXIST_USER") {
-            return
+        let resp;
+        try {
+            resp = await $http.post('signInLocal', payload)
+        } catch (e) {
+            console.error(e);
+            return;
         }
         const authToken = resp.data.data.authToken
         const setAuthTokenPromise = await dispatch('setAuthToken', { authToken })

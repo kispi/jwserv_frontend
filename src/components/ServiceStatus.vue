@@ -8,40 +8,31 @@
             <h3 slot="header" class="c-danger">{{ 'CONFIRM_DELETE_SERVICE_RECORD' | translate }}</h3>
         </Confirm>
 
-        <Options
-            :buttons="exportOptions"
+        <ExportOptions
             v-if="showOptions"
-            v-on:close="onCloseExportOptions">
-            <h3 slot="header" class="c-primary text-center">{{ 'EXPORT_SERVICE_RECORD' | translate }}</h3>
-        </Options>
+            v-on:close="showOptions = false">
+        </ExportOptions>
 
         <Weeks @onDaySelected="onDaySelected"></Weeks>
 
-        <div class="menu m-16 flex-rtl">
-            <button class="btn btn-default flex-ltr p-l-40 p-relative" @click="showOptions = true">
-                <img class="m-t-8 m-r-8 display-inline-block p-absolute" src="../assets/images/excel.png" style="width: 24px; height: 24px; left: 8px;">
-                <span class="text-uppercase display-inline-block">{{ 'EXPORT' | translate }}</span>
-            </button>
-        </div>
-
-        <transition name="fade" tag="div">
-            <div class="search" v-if="showSearch">
-                <input class="query-value" v-selected v-model="keyword" ref="query-value" />
-                <div class="filters">
-                    <div class="c-secondary f-700">{{ selectedFilter.title | translate }}</div>
-                    <i class="zmdi zmdi-filter-list" @click="showFilters = !showFilters"></i>
-
-                    <transition name="fade">
-                        <ul v-if="showFilters">
-                            <li class="filter-item" v-for="filter in filters" :key="filter.title" @click="selectFilter(filter)">
-                                {{ filter.title | translate }}
-                                <i class="zmdi zmdi-check pull-right c-secondary" v-if="selectedFilter.key === filter.key"></i>
-                            </li>
-                        </ul>
-                    </transition>
-                </div>
+        <div class="menu m-16 flex-row">
+            <div class="pull-left flex-row search">
+                <input ref="keyword" v-model="keyword" :placeholder="'KEYWORD' | translate" class="search flex-wrap m-r-8">
+                <Selector
+                    class="flex-wrap"
+                    v-model="selectedFilterTitle"
+                    :items="filterTitles"
+                    :translate="true"
+                    v-on:change="onChange"/>
             </div>
-        </transition>
+
+            <div class="flex-rtl">
+                <button class="btn btn-default flex-ltr p-l-40 p-relative" @click="showOptions = true">
+                    <img class="m-t-8 m-r-8 display-inline-block p-absolute" src="../assets/images/excel.png" style="width: 24px; height: 24px; left: 8px;">
+                    <span class="text-uppercase display-inline-block">{{ 'EXPORT' | translate }}</span>
+                </button>
+            </div>
+        </div>
 
         <transition-group name="list-complete" tag="div" class="service-cards">
             <ServiceCard
@@ -66,27 +57,27 @@
 <script>
 import debounce from '@/modules';
 import Confirm from '@/components/modals/Confirm';
-import Options from '@/components/modals/Options';
+import ExportOptions from '@/components/modals/ExportOptions';
 import ServiceCard from '@/components/ServiceCard';
 import Pagination from '@/components/app/Pagination'
+import Selector from '@/components/app/Selector';
 import Weeks from '@/components/app/Weeks';
 import * as $http from "axios";
 
 export default {
-    components: { ServiceCard, Confirm, Options, Weeks, Pagination },
+    components: { ServiceCard, Selector, Confirm, ExportOptions, Weeks, Pagination },
     name: 'ServiceStatus',
     data: () => ({
         user: null,
         serviceRecords: null,
         showAskDelete: false,
         showOptions: false,
-        selectedRecord: null,
         total: null,
-        showSearch: false,
-        showFilters: false,
+        selectedRecord: null,
         selectedDay: null,
         selectedPage: null,
         selectedFilter: null,
+        selectedFilterTitle: "LEADER_NAME",
         limit: 20,
         keyword: null,
         params: {},
@@ -100,7 +91,6 @@ export default {
         document.addEventListener('click', this.collapse);
     },
     beforeDestroy: function() {
-        this.$bus.$off("showSearch");
         document.removeEventListener('click', this.collapse)
     },
     computed: {
@@ -124,26 +114,18 @@ export default {
                 }
             ]
         },
-        exportOptions() {
-            return [{
-                title: "CSV",
-                class: "btn-primary btn-block",
-                value: "csv"
-            }, {
-                title: "EXCEL",
-                class: "btn-secondary btn-block",
-                value: "excel"
-            }, {
-                title: "HTML",
-                class: "btn-accent btn-block",
-                value: "html"
-            }]
-        }
+        filterTitles() {
+            let f = this.filters.map(f => {
+                return f.title;
+            })
+            return f;
+        },
     },
     mounted() {
         if (!this.$store.getters.user.role)
             this.$store.dispatch('getMe');
 
+        this.selectedFilter = this.filters[0];
         this.init();
     },
     methods: {
@@ -151,7 +133,6 @@ export default {
             if (this.$store.getters.user)
                 this.user = this.$store.getters.user;
 
-            this.selectedFilter = this.filters[0];
             this.selectedPage = 0;
             this.reload();
         },
@@ -186,26 +167,6 @@ export default {
                 console.error(e.response);
             }
         },
-        async excelExport(type) {
-            try {
-                let params = {
-                    all: true
-                };
-                params.exportType = type;
-                if (type === "html") {
-                    // this.$router.push("service-status/export");
-                    window.open('#/service-status/export', '_blank');
-                } else if (["csv", "excel"].indexOf(type) >= 0) {
-                    this.$download('export/serviceRecords', params, 'area.csv');
-                }
-            } catch (e) {
-                console.error(e);
-            }
-        },
-        onCloseExportOptions(e) {
-            this.showOptions = false;
-            this.excelExport(e);
-        },
         onKeyword(keyword) {
             delete this.params.offset;
             this.selectedPage = 0;
@@ -232,33 +193,21 @@ export default {
                 this.deleteRecord()
             }
         },
-        selectFilter(filter) {
+        onChange(event) {
+            let filterTitle = event.newVal;
             this.keyword = null;
-            this.showFilters = false;
-            this.selectedFilter = filter;
-            this.$refs['query-value'].focus();
+            this.selectedFilter = this.filters.find(f => {
+                return f.title === filterTitle;
+            })
+            this.$refs['keyword'].focus();
             this.reload(this.keyword);
         },
-        collapse(e) {
-            if (e.target.className === 'nav-bar-button mobile-search') {
-                this.showSearch = !this.showSearch;
-                return;
-            }
-            this.showSearch = [
-                'nav-bar-button mobile-search',
-                'query-value',
-                'zmdi zmdi-filter-list',
-                'filter-item'
-            ].some(c => {
-                return c === e.target.className;
-            })
-        }
     }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" scoped>
+<style lang="less">
 .list-complete-item {
     transition: all 0.5s;
 }
@@ -279,66 +228,17 @@ export default {
     right: 0;
 }
 
-.search {
-    position: fixed;
-    top: 48px;
-    right: 0;
-    z-index: 1;
+input.search {
+    height: 40px;
+    font-size: 16px;
+    width: 160px;
+}
 
-    input {
-        width: 226px;
-        padding-right: 80px;
-    }
+.selector {
+    width: 80px;
 
-    .filters {
-        position: absolute;
-        top: 0;
-        right: 0;
-        display: flex;
-        line-height: 40px;
-
-        div {
-            font-size: 12px;
-        }
-
-        i {
-            padding: 8px;
-            font-size: 24px;
-            color: rgba(0, 0, 0, 0.5);
-
-            &.zmdi-filter-list {
-                right: 0;
-            }
-
-            &.zmdi-check {
-                padding: 0;
-            }
-        }
-
-        ul {
-            position: absolute;
-            top: 0;
-            right: 0;
-            animation-duration: 0.3s;
-            padding: 0;
-            margin: 0;
-            top: 40px;
-            width: 140px;
-
-            li {
-                line-height: initial;
-                padding: 8 16px;
-                cursor: pointer;
-                border: solid 1px rgba(0, 0, 0, 0.25);
-                border-bottom: dotted 1px rgba(0, 0, 0, 0.1);
-                background: white;
-                list-style-type: none;
-
-                &:not(.selected):hover {
-                    background: #eee;
-                }
-            }
-        }
+    li, .selected-item, span {
+        padding: 11px 4px !important;
     }
 }
 </style>

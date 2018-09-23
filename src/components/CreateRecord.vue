@@ -146,7 +146,7 @@ export default {
                 if (e.response && e.response.data === "RECORD_ALREADY_EXISTS") {
                     this.$toast.error("ERROR_" + e.response.data);
                 } else {
-                    console.log(e);
+                    console.error(e);
                     this.$toast.error("ERROR_SAVE");
                 }
             }

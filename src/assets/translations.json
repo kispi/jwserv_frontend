@@ -43,6 +43,10 @@
         "en": "Do you want to change the role of the user?",
         "kr": "해당 유저의 권한을 변경할까요?"
     },
+    "DEVELOPING": {
+        "en": "Developing",
+        "kr": "개발중입니다"
+    },
     "PRINT": {
         "en": "Print",
         "kr": "인쇄"
@@ -204,8 +208,12 @@
         "kr": "로그인"
     },
     "EMAIL": {
-        "en": "Email",
-        "kr": "이메일"
+        "en": "Email or ID",
+        "kr": "이메일 또는 아이디"
+    },
+    "KEYWORD": {
+        "en": "Type keyword",
+        "kr": "검색어를 입력하세요"
     },
     "PASSWORD": {
         "en": "Password",

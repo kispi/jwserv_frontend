@@ -45,33 +45,21 @@ export default {
     },
     methods: {
         async init() {
+            let date = JSON.parse(this.$route.query.date);
             let params = {
-                    all: true,
-                    exportType: 'html'
-                };
+                from: date.from,
+                to: date.to,
+                exportType: 'html'
+            };
             $http.get('export/serviceRecords', { params })
                 .then(r => {
                     this.pages = this.removeEmptyCells(r.data.data);
                 })
         },
-        collapse(e) {
-            if (e.target.className === 'nav-bar-button mobile-search') {
-                this.showSearch = !this.showSearch;
-                return;
-            }
-            this.showSearch = [
-                'nav-bar-button mobile-search',
-                'query-value',
-                'zmdi zmdi-filter-list',
-                'filter-item'
-            ].some(c => {
-                return c === e.target.className;
-            })
-        },
         removeEmptyCells(data) {
             var returnOdds = function(row) {
                 let newRow = [];
-                row.forEach((td, index) => {
+                (row || []).forEach((td, index) => {
                     if (index % 2 === 0) {
                         newRow.push(td);
                     }

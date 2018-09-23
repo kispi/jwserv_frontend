@@ -6,7 +6,7 @@
             <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
         </Alert>
 
-        <div class="m-t-30 m-b-30 f-30 f-700">{{ 'WELCOME' | translate }}</div>
+        <div class="m-t-50 m-b-50 f-30 f-700">{{ 'WELCOME' | translate }}</div>
         <input class="input-block m-b-10" v-model="email" :placeholder="'EMAIL' | translate" v-on:keyup.enter="onClickLogin"/>
         <input type="password" class="input-block m-b-30" v-model="password" :placeholder="'PASSWORD' | translate" v-on:keyup.enter="onClickLogin"/>
         <button class="btn btn-primary btn-block m-b-10" @click="onClickLogin()">{{ 'LOGIN' | translate }}</button>
@@ -43,13 +43,14 @@ export default {
                 this.$router.push("service-status");
             }
         },
-        async onClickLogin() {           
+        async onClickLogin() {
             let payload = {
                 email: this.email,
                 password: this.password
             };
             try {
                 await this.$store.dispatch("signIn", payload);
+                this.$bus.$emit("onLogin");
                 this.$router.push("service-status");
             } catch (e) {
                 this.errMsg = e.response.data;

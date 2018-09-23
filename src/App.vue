@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Toast/>
-        <Loading v-if="loading"/>
+        <Loading v-if="loading && shouldShow"/>
         <Header v-if="showHeader()" :currentRoute="currentRoute()"/>
         <div id="section">
             <router-view/>
@@ -27,6 +27,19 @@ export default {
     computed: {
         loading() {
             return this.$store.getters.loading;
+        }
+    },
+    data: () => ({
+        shouldShow: false
+    }),
+    watch: {
+        loading() {
+            this.shouldShow = false;
+            if (this.loading) {
+                setTimeout(() => {
+                    this.shouldShow = true;
+                }, 200);
+            }
         }
     },
     methods: {
