@@ -10,7 +10,9 @@
 
         <ExportOptions
             v-if="showOptions"
-            v-on:close="showOptions = false">
+            v-on:close="showOptions = false"
+            :initialFrom="from"
+            :initialTo="to">
         </ExportOptions>
 
         <Weeks @onDaySelected="onDaySelected"></Weeks>
@@ -62,6 +64,7 @@ import ServiceCard from '@/components/ServiceCard';
 import Pagination from '@/components/app/Pagination'
 import Selector from '@/components/app/Selector';
 import Weeks from '@/components/app/Weeks';
+import ExportRange from '@/mixins/ExportRange'
 import * as $http from "axios";
 
 export default {
@@ -82,6 +85,7 @@ export default {
         keyword: null,
         params: {},
     }),
+    mixins: [ExportRange],
     watch: {
         keyword: debounce(function(newVal) {
             this.onKeyword(newVal);

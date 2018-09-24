@@ -1,8 +1,6 @@
 <template>
 </template>
 <script>
-import CommonMixin from "@/mixins/Common";
-
 export default {
     name: 'Landing',
     mounted() {
