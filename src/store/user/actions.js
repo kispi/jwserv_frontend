@@ -17,13 +17,7 @@ export default {
     },
 
     async signIn({ commit, dispatch }, payload) {
-        let resp;
-        try {
-            resp = await $http.post('signInLocal', payload)
-        } catch (e) {
-            console.error(e);
-            return;
-        }
+        const resp = await $http.post('signInLocal', payload)
         const authToken = resp.data.data.authToken
         const setAuthTokenPromise = await dispatch('setAuthToken', { authToken })
 
