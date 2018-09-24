@@ -9,7 +9,7 @@
         </Confirm>
 
         <ExportOptions
-            v-if="showOptions"
+            v-if="showOptions && from && to"
             v-on:close="showOptions = false"
             :initialFrom="from"
             :initialTo="to">
@@ -213,16 +213,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
 .list-complete-item {
-    transition: all 0.5s;
+    transition: all 0.3s;
 }
 
 .list-complete-enter, .list-complete-leave-to {
     opacity: 0;
-    transform: translateX(-320px);
-}
-
-.list-complete-leave-active {
-    position: absolute;
+    transform: translateY(50px);
 }
 
 .service-cards {
