@@ -208,8 +208,16 @@
         "kr": "로그인"
     },
     "EMAIL": {
+        "en": "Email",
+        "kr": "이메일"
+    },
+    "EMAIL_OR_ID": {
         "en": "Email or ID",
         "kr": "이메일 또는 아이디"
+    },
+    "NICKNAME": {
+        "en": "Nickname (ID)",
+        "kr": "닉네임 (아이디)"
     },
     "KEYWORD": {
         "en": "Type keyword",
@@ -294,6 +302,18 @@
     "MEMO": {
         "en": "Memo",
         "kr": "비고"
+    },
+    "WARNING_ROLE_RESET": {
+        "en": "Your role will be reset",
+        "kr": "권한이 재설정됩니다"
+    },
+    "WARNING_ROLE_RESET_TXT": {
+        "en": "You cannot manipulate service records without the permission of the admin of your congregation after change",
+        "kr": "회중을 변경하면 변경된 회중 관리자의 승인 없이는 봉사 기록을 수정할 수 없습니다"
+    },
+    "ADMIN_CANNOT_CHANGE_CONGREGATION": {
+        "en": "Admin cannot change the congregation",
+        "kr": "관리자는 회중을 변경할 수 없습니다"
     },
     "SAVE": {
         "en": "Save",

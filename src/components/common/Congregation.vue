@@ -108,6 +108,7 @@ export default {
 
 <style lang="less" scoped>
     .congregation-list {
+        z-index: 1;
         position: absolute;
         animation-duration: .3s;
         margin: 0;

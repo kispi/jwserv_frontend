@@ -142,7 +142,7 @@ export default {
         },
         async reload() {
             this.$loading(true);
-            this.params.orderby = "-id";
+            this.params.orderby = "-startedAt";
             this.params.limit = this.limit;
 
             if (this.keyword && this.keyword !== "" && this.selectedFilter) {
