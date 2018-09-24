@@ -89,7 +89,13 @@ export default {
     },
     methods: {
         async init() {
-            if (!this.user) {
+            try {
+                await this.$store.dispatch("loadAuthToken");
+            } catch (err) {
+                await this.$store.dispatch("clearAuthToken");
+                this.$router.push("login");
+            }
+            if (!this.user || (this.user && !this.user.role)) {
                 await this.$store.dispatch('getMe');
             }
             this.user = this.$store.getters.user;

@@ -9,7 +9,7 @@
         </Alert>
 
         <div class="table-wrapper" v-for="(page, pageIndex) in pages" :key="pageIndex">
-            <table>
+            <table id="printable">
                 <tr v-for="(tr, trIndex) in page" :key="trIndex" v-if="!empty(tr)">
                     <td
                         v-bind:colspan="shouldBeSpaned(tdIndex, trIndex)"
@@ -98,13 +98,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less">
-#section {
-    margin: 8px;
-    padding: 0;
-    font-family: 'Dotum';
-}
-
+<style lang="less" scoped>
 .table-wrapper {
     clear: left;
     float: left;
@@ -112,8 +106,9 @@ export default {
     margin-bottom: 54px;
 }
 
-table {
+table#printable {
     font-size: 12px;
+    font-family: 'Dotum' !important;
     color: #000;
     display: contents;
 
@@ -134,6 +129,7 @@ table {
     td {
         padding: 4px;
         text-align: center;
+        white-space: nowrap;
 
         &:not(.has-content) {
             color: #fff;

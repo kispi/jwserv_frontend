@@ -13,7 +13,7 @@
             <div slot="body">{{ errMsg + "_TXT" | translate }}</div>
         </Alert>
 
-        <table>
+        <table id="user-list">
             <thead class="text-uppercase">
                 <tr>
                     <td v-for="(key, index) in tableHeader" :key="index">{{ key.toUpperCase() | translate }}</td>

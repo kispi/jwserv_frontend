@@ -3,7 +3,7 @@
         <Toast/>
         <Loading v-if="loading && shouldShow"/>
         <Header v-if="showHeader()" :currentRoute="currentRoute()"/>
-        <div id="section">
+        <div id="section" :class="$router.currentRoute.name">
             <router-view/>
         </div>
         <BottomNav v-if="showNav()"/>
