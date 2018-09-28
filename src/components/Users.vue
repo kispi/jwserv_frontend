@@ -31,6 +31,7 @@
                             v-on:change="onChange($event, user)"/>
                         <div v-else>{{ user.role.toUpperCase() | translate }}</div>
                     </td>
+                    <td>{{ user.nickname }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.phone }}</td>
                     <td>{{ user.lastActivity | formatDate("YYYY-MM-DD") }}</td>
@@ -66,7 +67,7 @@ export default {
     },
     computed: {
         tableHeader() {
-            return ["name", "role", "email", "phone", "last_activity"]
+            return ["name", "role", "nickname", "email", "phone", "last_activity"]
         },
         roles() {
             return ["admin", "writer", "public"]
