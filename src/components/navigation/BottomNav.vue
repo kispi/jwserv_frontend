@@ -1,22 +1,15 @@
 <template>
     <div class="bottom-nav">
-        <img class="logo pull-right" src="../../assets/images/logo.png" v-redirect="'dashboard'">
-        <div class>
-
+        <img class="logo pull-right" src="../../assets/images/logo.png">
+        <div class="about text-uppercase" v-redirect="'about'">
+            {{ 'ABOUT' | translate }}
         </div>
     </div>
 </template>
 
-<script>
-export default {
-    name: 'BottomNav',
-    data () {
-        return {
-        }
-    }
-}
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.about {
+    font-size: 12px;
+    padding: 18px;
+}
 </style>

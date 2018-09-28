@@ -56,12 +56,36 @@
         "kr": "어떻게 인쇄하나요?"
     },
     "HELP_EXPORT_TXT": {
-        "en": "Based on Chrome.\n\n1. Right click the page\n2. Click 'Print'\n3. + More\n4. Set 'whitespace' as 'default'\n5. Print",
-        "kr": "크롬을 기준으로 합니다.\n\n1. 페이지를 마우스로 우클릭\n2. '인쇄' 클릭\n3. + 설정 더보기 클릭\n4. '여백'을 '기본값'으로 설정\n5. 인쇄"
+        "en": "Based on Chrome, Windows.\n\n1. Right click the page\n2. Click 'Print'\n3. + More\n4. Set 'whitespace' as 'default'\n5. Print",
+        "kr": "크롬, 윈도우를 기준으로 합니다.\n\n1. 페이지를 마우스로 우클릭\n2. '인쇄' 클릭\n3. + 설정 더보기 클릭\n4. '여백'을 '기본값'으로 설정\n5. 인쇄"
+    },
+    "NOT_FOUND": {
+        "en": "Not Found",
+        "kr": "페이지를 찾을 수 없습니다"
+    },
+    "NOT_FOUND_INSTRUCTION": {
+        "en": "Press <i class='zmdi zmdi-arrow-left bg-primary c-white p-5'></i> or the menu on top-right side and start using app",
+        "kr": "우측 상단의 메뉴나 <i class='zmdi zmdi-arrow-left bg-primary c-white p-5'></i>를 눌러서 다시 앱 사용을 시작해주세요"
     },
     "EXPORT": {
         "en": "Export",
         "kr": "추출"
+    },
+    "ABOUT": {
+        "en": "About",
+        "kr": "About"
+    },
+    "ABOUT_JWSERV": {
+        "en": "What is JW SERV?",
+        "kr": "JWSERV란?"
+    },
+    "ABOUT_JWSERV_TXT": {
+        "en": "<span class='c-secondary f-700'> JW SERV</span> is the Progressive Web App for brothers who take responsibility of areas.<br><br> You can easily write the daily service, also can print S-13 form for circuit-overseer. Admins can set the previlage of writing, deleting records of other users.",
+        "kr": "<span class='c-secondary f-700'> JW SERV</span>는 구역을 돌보는 형제들을 위한 Progressive Web App입니다.<br><br> 봉사 기록을 할 수 있으며, 순회방문을 대비하여 언제든 손쉽게 S-13을 출력할 수 있습니다. 관리자들은 다른 사용자들의 기록, 삭제에 대한 권한을 설정 할 수 있습니다."
+    },
+    "TECH_STACK": {
+        "en": "Tech Stack",
+        "kr": "기술 스택"
     },
     "EXPORT_SERVICE_RECORD": {
         "en": "Export service record",

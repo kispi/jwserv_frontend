@@ -38,7 +38,7 @@ export default {
     mounted() {
         if (["Login", "Signup"].indexOf(this.currentRoute.name) === -1) {
             this.init();
-        }                
+        }
     },
     watch: {
         $route (to, from) {
@@ -66,7 +66,7 @@ export default {
                 })    
             }
             menu.push({
-                key: "LOGOUT",
+                key: "LOGOUT"
             });
             menu.forEach(m => {
                 m.title = this.$options.filters.translate(m.key);

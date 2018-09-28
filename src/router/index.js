@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import AuthCheck from './auth-check'
+import About from '@/components/About'
 import Landing from '@/components/Landing'
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
@@ -19,6 +20,10 @@ const router = new Router({
         path: '/not-found',
         name: 'NotFound',
         component: NotFound
+    }, {
+        path: '/about',
+        name: 'About',
+        component: About
     }, {
         path: '/',
         name: 'Landing',
