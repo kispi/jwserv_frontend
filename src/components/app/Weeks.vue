@@ -61,9 +61,9 @@ export default {
     justify-content: space-between;
 
     span {
-        max-width: 32px;
-        max-height: 32px;
-        line-height: 32px;
+        max-width: 40px;
+        max-height: 40px;
+        line-height: 40px;
         text-align: center;
         border-radius: 50%;
     }
