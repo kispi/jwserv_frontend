@@ -211,34 +211,19 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less">
+<style lang="less" scoped>
 .list-complete-item {
-    transition: all 0.3s !important;
+    transition: all 0.3s;
 }
 
 .list-complete-enter, .list-complete-leave-to {
     opacity: 0;
-    transform: translateY(320px) !important;
-}
-
-.service-cards {
-    top: 48px;
-    bottom: 48px;
-    left: 0;
-    right: 0;
+    transform: translateY(320px);
 }
 
 input.search {
     height: 40px;
     font-size: 16px;
     width: 160px;
-}
-
-.selector {
-    width: 80px;
-
-    li, .selected-item, span {
-        padding: 11px 4px !important;
-    }
 }
 </style>
