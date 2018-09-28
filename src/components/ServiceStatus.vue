@@ -213,12 +213,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
 .list-complete-item {
-    transition: all 0.3s;
+    transition: all 0.3s !important;
 }
 
 .list-complete-enter, .list-complete-leave-to {
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(320px) !important;
 }
 
 .service-cards {
