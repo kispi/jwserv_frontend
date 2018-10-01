@@ -78,7 +78,12 @@ export default {
                 this.saveSuccess = true;
                 this.$toast.success("SUCCESS_SAVE");
             } catch (e) {
-                console.error(e);
+                if (e.response && e.response.data === "RECORD_ALREADY_EXISTS") {
+                    this.$toast.error("ERROR_" + e.response.data);
+                } else {
+                    console.error(e);
+                    this.$toast.error("ERROR_SAVE");
+                }
             }
         }
     }
