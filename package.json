@@ -2,7 +2,7 @@
   "name": "jwserv_frontend",
   "version": "1.0.0",
   "description": "jwserv frontend",
-  "author": "Chanho Kim <chanho@codebrick.co>",
+  "author": "Chanho Kim <kispi@naver.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
