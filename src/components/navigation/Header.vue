@@ -33,7 +33,6 @@ export default {
     data: () => ({
         current: {},
         showSidebar: false,
-        user: null,
     }),
     mounted() {
         if (["Login", "Signup"].indexOf(this.currentRoute.name) === -1) {
@@ -44,6 +43,9 @@ export default {
         $route (to, from) {
             if (to.path) {
                 this.current = to;
+            }
+            if (this.user && !this.user.role) {
+                this.$store.dispatch('getMe');
             }
         }
     },
@@ -78,6 +80,9 @@ export default {
         },
         showBack() {
             return (this.currentRoute.name !== "Login")
+        },
+        user() {
+            return this.$store.getters.user;
         }
     },
     created() {
@@ -98,7 +103,6 @@ export default {
             if (!this.user || (this.user && !this.user.role)) {
                 await this.$store.dispatch('getMe');
             }
-            this.user = this.$store.getters.user;
         },
         routeTitle(path) {
             if (!path) {
