@@ -142,6 +142,7 @@ export default {
         },
         async reload() {
             this.$loading(true);
+            this.params.orderby = "-startedAt,-area";
             this.params.limit = this.limit;
 
             if (this.keyword && this.keyword !== "" && this.selectedFilter) {
