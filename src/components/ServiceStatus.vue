@@ -104,7 +104,7 @@ export default {
                     key: "leaderName__icontains",
                     title: "LEADER_NAME"
                 }, {
-                    key: "area__icontains",
+                    key: "area",
                     title: "AREA"
                 }, {
                     key: "startedAt__icontains",
@@ -204,8 +204,6 @@ export default {
                 return f.title === filterTitle;
             })
             this.$refs['keyword'].focus();
-            if (this.keyword && this.keyword.length > 0);
-                this.reload(this.keyword);
         },
     }
 }
