@@ -204,7 +204,8 @@ export default {
                 return f.title === filterTitle;
             })
             this.$refs['keyword'].focus();
-            this.reload(this.keyword);
+            if (this.keyword && this.keyword.length > 0);
+                this.reload(this.keyword);
         },
     }
 }
