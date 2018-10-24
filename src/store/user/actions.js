@@ -1,11 +1,18 @@
 import * as $http from 'axios'
+import router from '../../router'
 
 export default {
 
     async getMe({ commit, dispatch }) {
-        const resp = await $http.get('/me')
-        const user = resp.data.data
-        return commit('setUser', user)
+        try {
+            const resp = await $http.get('/me')
+            const user = resp.data.data
+            return commit('setUser', user)
+        } catch (e) {
+            if (e.response && e.response.data === "INVALID_APIKEY") {
+                return dispatch('signOut');
+            }
+        }
     },
 
     async signUp({ commit, dispatch }, payload) {
@@ -31,6 +38,7 @@ export default {
     signOut({ commit, dispatch }) {
         const clearAuthTokenPromise = dispatch('clearAuthToken')
 
+        router.push("login")
         return Promise.all([clearAuthTokenPromise])
     },
 
