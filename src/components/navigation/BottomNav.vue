@@ -1,9 +1,9 @@
 <template>
-    <div class="bottom-nav">
-        <img class="logo pull-right" src="../../assets/images/logo.png">
+    <div class="bottom-nav flex-row items-center">
         <div class="about text-uppercase" v-redirect="'about'">
             {{ 'ABOUT' | translate }}
         </div>
+        <img class="logo flex-wrap" src="../../assets/images/logo.png">
     </div>
 </template>
 
