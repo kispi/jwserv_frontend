@@ -73,7 +73,7 @@ export default {
                 } else if (type === "csv") {
                     this.$download('export/serviceRecords', params, 'area.csv');
                 } else if (type === "excel") {
-                    this.$toast.warning("DEVELOPING");
+                    this.$download('export/serviceRecords', params, 'area.xlsx');
                 }
             } catch (e) {
                 console.error(e);
