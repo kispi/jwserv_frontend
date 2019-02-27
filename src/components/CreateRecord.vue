@@ -16,6 +16,7 @@
 
             <label for="leader_name">{{ 'LEADER_NAME' | translate }} <span class="required"></span></label>
             <input 
+                name="leader"
                 class="input-block m-b-20 m-t-10"
                 :class="{ 'invalid b-sm': !valid.leaderName }"
                 v-model="record.leaderName"
