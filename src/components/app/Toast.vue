@@ -47,7 +47,7 @@ export default {
                 if (!this.toast.type) {
                     this.toastTimeout = setTimeout(() => {
                         this.$store.dispatch("removeToast");
-                    }, 3000);
+                    }, 1000);
                 }
             }
         }
