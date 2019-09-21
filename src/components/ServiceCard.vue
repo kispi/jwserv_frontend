@@ -140,6 +140,15 @@ export default {
 
                 if (!inputs[0].text) return
 
+                if (!detail) {
+                    onConfirm({
+                        record: { id: this.record.id },
+                        name: inputs[0].text,
+                        memo: inputs[1].text,
+                    })
+                    return
+                }
+
                 if (detail.name === inputs[0].text &&
                     detail.memo === inputs[1].text) return
 
@@ -151,6 +160,3 @@ export default {
     }
 };
 </script>
-
-<style scoped lang="less">
-</style>
