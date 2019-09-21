@@ -24,12 +24,12 @@
             <div class="detail">
                 방문지:
                 <span
-                    @click="onClickDetail(detail)"
-                    class="text-underline c-primary m-r-5"
+                    class="c-primary m-r-10"
                     :key="detail.id"
-                    v-for="detail in record.details"
-                    v-html="detail.name"
-                />
+                    v-for="detail in record.details">
+                    <span class="text-underline" @click="onClickDetail(detail)">{{ detail.name }}</span>
+                    <i @click="deleteDetail(detail)" class="zmdi zmdi-close"/>
+                </span>
             </div>
         </div>
     </div>
@@ -102,37 +102,51 @@ export default {
             }
         },
         addDetail() {
-            const onConfirm = async name => {
+            this.detailModal()
+        },
+        async onClickDetail(detail) {
+            this.detailModal(detail)
+        },
+        async deleteDetail(detail) {
+            try {
+                const resp = await $http.delete(`/serviceRecords/${this.record.id}/detail/${detail.id}`)
+                this.$bus.$emit('onDetailChanged')
+            } catch (e) {}
+        },
+        detailModal(detail) {
+            const onConfirm = async (detail) => {
+                let promise = $http[detail.id > 0 ? 'put' : 'post'](`/serviceRecords/${this.record.id}/detail/${detail.id > 0 ? detail.id : ''}`, detail)
                 try {
-                    const resp = await $http.post(`/serviceRecords/${this.record.id}/detail`, {
-                        record: { id: this.record.id },
-                        name,
-                    })
+                    const resp = await promise
                     this.$bus.$emit('onDetailChanged')
                 } catch (e) {}
             }
 
             this.$modal.input({
-                title: '방문지 이름',
-                body: `<div class="m-b-16">구역 ${this.record.area} 내 방문한 곳을 입력합니다</div>`,
+                title: '방문지 상세 정보',
                 inputs: [{
+                    label: '방문지 이름',
                     placeholder: 'EX:) CU 수정점',
+                    text: (detail || {}).name,
                     type: 'input',
+                }, {
+                    label: '메모',
+                    placeholder: 'EX:) 호의적',
+                    text: (detail || {}).memo,
+                    type: 'textarea',
                 }],
             }).then(inputs => {
                 if (!inputs || inputs.length === 0) return
 
-                let name = inputs[0].text
-                if (!name) return
+                if (!inputs[0].text) return
 
-                onConfirm(name.toLowerCase())
+                if (detail.name === inputs[0].text &&
+                    detail.memo === inputs[1].text) return
+
+                detail.name = inputs[0].text
+                detail.memo = inputs[1].text
+                onConfirm(detail)
             })
-        },
-        async onClickDetail(detail) {
-            try {
-                const resp = await $http.delete(`/serviceRecords/${this.record.id}/detail/${detail.id}`)
-                this.$bus.$emit('onDetailChanged')
-            } catch (e) {}
         }
     }
 };

@@ -17,7 +17,6 @@
             v-if="inputs"
             class="inputs">
             <div
-                class="form-control"
                 :key="idx"
                 v-for="(input, idx) in inputs">
                 <label v-html="$translate(input.label)"/>
