@@ -17,23 +17,26 @@
 
         <Weeks @onDaySelected="onDaySelected"></Weeks>
 
-        <div class="menu m-16 flex-row">
-            <div class="pull-left flex-row search">
-                <input ref="keyword" v-model="keyword" :placeholder="'KEYWORD' | translate" class="search flex-wrap m-r-8">
-                <Selector
-                    class="flex-wrap"
-                    v-model="selectedFilterTitle"
-                    :items="filterTitles"
-                    :translate="true"
-                    v-on:change="onChange"/>
-            </div>
+        <div class="menu m-16">
+            <div class="flex-row">
+                <div class="pull-left flex-row search">
+                    <input ref="keyword" v-model="keyword" :placeholder="'KEYWORD' | translate" class="search flex-wrap m-r-8">
+                    <Selector
+                        class="flex-wrap"
+                        v-model="selectedFilterTitle"
+                        :items="filterTitles"
+                        :translate="true"
+                        v-on:change="onChange"/>
+                </div>
 
-            <div class="flex-rtl">
-                <button class="btn btn-default flex-ltr p-l-40 p-relative" @click="showOptions = true">
-                    <img class="m-t-8 m-r-8 display-inline-block p-absolute" src="../assets/images/excel.png" style="width: 24px; height: 24px; left: 8px;">
-                    <span class="text-uppercase display-inline-block">{{ 'EXPORT' | translate }}</span>
-                </button>
+                <div class="flex-rtl">
+                    <button class="btn btn-default flex-ltr p-l-40 p-relative" @click="showOptions = true">
+                        <img class="m-t-8 m-r-8 display-inline-block p-absolute" src="../assets/images/excel.png" style="width: 24px; height: 24px; left: 8px;">
+                        <span class="text-uppercase display-inline-block">{{ 'EXPORT' | translate }}</span>
+                    </button>
+                </div>
             </div>
+            <button v-if="bookboo" @click="showImages" class="btn btn-primary btn-block m-t-16">구역 사진 (클릭 시 확대)</button>
         </div>
 
         <transition-group name="list-complete" tag="div" class="service-cards">
@@ -92,9 +95,11 @@ export default {
         }, 500)
     },
     created() {
+        this.$bus.$on('onDetailChanged', this.callApi)
         document.addEventListener('click', this.collapse);
     },
     beforeDestroy: function() {
+        this.$bus.$off('onDetailChanged', this.callApi)
         document.removeEventListener('click', this.collapse)
     },
     computed: {
@@ -124,6 +129,10 @@ export default {
             })
             return f;
         },
+        bookboo() {
+            let me = this.$store.getters.user
+            return (me.congregation || {}).name === '경기성남북부'
+        },
     },
     mounted() {
         if (!this.$store.getters.user.role)
@@ -140,8 +149,7 @@ export default {
             this.selectedPage = 0;
             this.reload();
         },
-        async reload() {
-            this.$loading(true);
+        reload() {
             this.params.orderby = "-startedAt,-area";
             this.params.limit = this.limit;
 
@@ -151,6 +159,10 @@ export default {
                 delete this.params.filter;
             }
 
+            this.callApi()
+        },
+        async callApi() {
+            this.$loading(true);
             try {
                 const resp = await $http.get(
                     '/serviceRecords' + (this.selectedDay ? '/' + this.$options.filters.translate(this.selectedDay.name, "en") : ""), { params: this.params }
@@ -170,6 +182,23 @@ export default {
             } catch (e) {
                 console.error(e.response);
             }
+        },
+        showImages() {
+            let images = [
+                'compiled',
+                'a',
+                'b',
+                'c',
+                'd',
+                'e',
+                'f',
+                'g',
+                'h',
+            ].map(name => require(`@/assets/images/markets/${name}.jpg`))
+            this.$modal.images({
+                images,
+                openTab: true,
+            })
         },
         onKeyword(keyword) {
             delete this.params.offset;

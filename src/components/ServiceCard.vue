@@ -1,10 +1,13 @@
 <template>
     <div class="service-card">
 
-        <div class="row service-card-header" v-if="role !== 'public'">
-            <i class="zmdi zmdi-delete m-r-10" @click="$emit('showAskDelete', record)"></i>
-            <i class="zmdi zmdi-edit" @click="edit = true" v-if="!edit"></i>
-            <i class="zmdi zmdi-save" @click="save()" v-if="edit"></i>
+        <div class="row service-card-header flex-row flex-between" v-if="role !== 'public'">
+            <i @click="addDetail" class="zmdi zmdi-plus"/>
+            <div class="flex-row">
+                <i class="zmdi zmdi-edit" @click="edit = true" v-if="!edit"/>
+                <i class="zmdi zmdi-save" @click="save()" v-if="edit"/>
+                <i class="zmdi zmdi-delete m-l-10" @click="$emit('showAskDelete', record)"></i>
+            </div>
         </div>
         <div class="row">
             <input class="area col-xs-6" v-model="record.area" :disabled="!edit">
@@ -16,6 +19,18 @@
         </div>
         <div class="row">
             <input class="memo" v-model="record.memo" :disabled="!edit">
+        </div>
+        <div v-if="record.details" class="row">
+            <div class="detail">
+                방문지:
+                <span
+                    @click="onClickDetail(detail)"
+                    class="text-underline c-primary m-r-5"
+                    :key="detail.id"
+                    v-for="detail in record.details"
+                    v-html="detail.name"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -44,9 +59,9 @@ export default {
         let started;
         let ended;
 
-        if (this.record.startedAt)
+        if (this.record.startedAt && typeof this.record.startedAt === 'string')
             started = new Date(this.record.startedAt.substring(0, 10));
-        if (this.record.endedAt)
+        if (this.record.endedAt && typeof this.record.endedAt === 'string')
             ended = new Date(this.record.endedAt.substring(0, 10));
         
         this.started = started;
@@ -85,6 +100,39 @@ export default {
                     this.$toast.error("ERROR_SAVE");
                 }
             }
+        },
+        addDetail() {
+            const onConfirm = async name => {
+                try {
+                    const resp = await $http.post(`/serviceRecords/${this.record.id}/detail`, {
+                        record: { id: this.record.id },
+                        name,
+                    })
+                    this.$bus.$emit('onDetailChanged')
+                } catch (e) {}
+            }
+
+            this.$modal.input({
+                title: '방문지 이름',
+                body: `<div class="m-b-16">구역 ${this.record.area} 내 방문한 곳을 입력합니다</div>`,
+                inputs: [{
+                    placeholder: 'EX:) CU 수정점',
+                    type: 'input',
+                }],
+            }).then(inputs => {
+                if (!inputs || inputs.length === 0) return
+
+                let name = inputs[0].text
+                if (!name) return
+
+                onConfirm(name.toLowerCase())
+            })
+        },
+        async onClickDetail(detail) {
+            try {
+                const resp = await $http.delete(`/serviceRecords/${this.record.id}/detail/${detail.id}`)
+                this.$bus.$emit('onDetailChanged')
+            } catch (e) {}
         }
     }
 };

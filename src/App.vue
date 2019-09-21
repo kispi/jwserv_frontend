@@ -7,6 +7,7 @@
             <router-view/>
         </div>
         <BottomNav v-if="showNav()"/>
+        <Modal/>
     </div>
 </template>
 
@@ -15,13 +16,15 @@ import Header from "@/components/navigation/Header";
 import BottomNav from "@/components/navigation/BottomNav";
 import Loading from "@/components/app/Loading";
 import Toast from "@/components/app/Toast";
+import Modal from "@/components/app/Modal";
 
 export default {
     components: {
         BottomNav,
         Header,
         Loading,
-        Toast
+        Toast,
+        Modal,
     },
     name: 'App',
     computed: {

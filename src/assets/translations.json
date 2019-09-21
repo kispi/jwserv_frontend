@@ -305,7 +305,7 @@
     },
     "LEADER_NAME": {
         "en": "Leader",
-        "kr": "인도자"
+        "kr": "봉사자"
     },
     "AREA": {
         "en": "Area",
@@ -325,7 +325,7 @@
     },
     "MEMO": {
         "en": "Memo",
-        "kr": "비고"
+        "kr": "메모"
     },
     "WARNING_ROLE_RESET": {
         "en": "Your role will be reset",

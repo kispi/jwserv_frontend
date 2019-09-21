@@ -1,6 +1,18 @@
 import Vue from 'vue'
 import router from '../router'
 
+const onCoverImage = (el, bind) => {
+    let imageUrl = bind.value
+    el.setAttribute('style', `background-image: url('${imageUrl}')`)
+}
+
+export const imgCover = {
+    bind: (el, bind) => onCoverImage(el, bind),
+    update: (el, bind) => onCoverImage(el, bind)
+}
+
+Vue.directive('imgCover', imgCover)
+
 Vue.directive('redirect', {
     bind: (el, binding) => {
         el.addEventListener('click', function() {

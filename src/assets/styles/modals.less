@@ -59,3 +59,62 @@
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
+
+.modal-images {
+    padding: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+
+    .image {
+        width: @screen-xs;
+        height: @screen-xs;
+    }
+
+    @chevron-size: 64px;
+
+    .zmdi-chevron-left,
+    .zmdi-chevron-right {
+        color: @brand-primary;
+        font-size: @chevron-size;
+        width: @chevron-size;
+        .center();
+
+        &:hover {
+            color: @brand-accent;
+        }
+    }
+
+    .index {
+        margin-top: 24px;
+        font-size: 16px;
+        justify-content: center;
+
+        .item {
+            @item-size: 12px;
+            width: @item-size;
+            height: @item-size;
+            border-radius: @item-size / 2;
+            background: #FAFAFA;
+
+            &:not(:last-child) {
+                margin-right: 8px;
+            }
+
+            &.selected {
+                background: @brand-primary;
+            }
+        }
+    }
+}
+
+.modal-input {
+    input,
+    textarea {
+        font-size: 12px;
+        width: 100%;
+    }
+
+    textarea {
+        min-height: 120px;
+    }
+}

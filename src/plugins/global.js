@@ -1,5 +1,6 @@
 import { store as $store } from '@/store'
 import * as $http from 'axios'
+import './modal'
 
 export const Toast = {
     install(Vue, options) {
@@ -60,6 +61,14 @@ export const Download = {
                 document.body.appendChild(link);
                 link.click();
             })
+        }
+    }
+}
+
+export const numArray = {
+    install(Vue) {
+        Vue.prototype.$numArray = function(len) {
+            return Array.apply(null, { length: len }).map(Number.call, Number)
         }
     }
 }
