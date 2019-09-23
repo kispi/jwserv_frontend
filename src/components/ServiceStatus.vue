@@ -185,16 +185,8 @@ export default {
         },
         showImages() {
             let images = [
-                'compiled',
-                'a',
-                'b',
-                'c',
-                'd',
-                'e',
-                'f',
-                'g',
-                'h',
-            ].map(name => require(`@/assets/images/markets/${name}.jpg`))
+                'last',
+            ].map(name => require(`@/assets/images/markets/${name}.png`))
             this.$modal.images({
                 images,
                 openTab: true,
