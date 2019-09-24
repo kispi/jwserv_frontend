@@ -44,7 +44,7 @@ export default {
             if (to.path) {
                 this.current = to;
             }
-            if (this.user && !this.user.role) {
+            if (this.user.id > 0 && !this.user.role) {
                 this.$store.dispatch('getMe');
             }
         }

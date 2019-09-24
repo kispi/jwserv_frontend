@@ -67,7 +67,6 @@ import ServiceCard from '@/components/ServiceCard';
 import Pagination from '@/components/app/Pagination'
 import Selector from '@/components/app/Selector';
 import Weeks from '@/components/app/Weeks';
-import ExportRange from '@/mixins/ExportRange'
 import * as $http from "axios";
 
 export default {
@@ -87,8 +86,9 @@ export default {
         limit: 20,
         keyword: null,
         params: {},
+        from: null,
+        to: null,
     }),
-    mixins: [ExportRange],
     watch: {
         keyword: debounce(function(newVal) {
             this.onKeyword(newVal);
@@ -147,6 +147,7 @@ export default {
                 this.user = this.$store.getters.user;
 
             this.selectedPage = 0;
+            this.getMaxDateRange();
             this.reload();
         },
         reload() {
@@ -233,6 +234,20 @@ export default {
                 return f.title === filterTitle;
             })
             this.$refs['keyword'].focus();
+        },
+        async getMaxDateRange() {
+            try {
+                let params = [{ limit: 1, orderby: "startedAt" }, { limit: 1, orderby: "-startedAt" }];
+                const from = await $http.get('serviceRecords', { params: params[0] });
+                const to = await $http.get('serviceRecords', { params: params[1] });
+
+                if (from.data.total === 0 || !to.data.total === 0) return
+
+                this.from = new Date(this.$moment(from.data.data[0].startedAt).format("YYYY-MM-DD"));
+                this.to = new Date(this.$moment(to.data.data[0].startedAt).format("YYYY-MM-DD"));
+            } catch (e) {
+                console.error(e);
+            }
         },
     }
 }

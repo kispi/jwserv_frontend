@@ -58,8 +58,8 @@ export default {
             }
         },
         async onClickSignUp() {
-            this.$router.push("signup");
-        }
+            this.$router.push({ name: "Signup" });
+        },
     }
 }
 </script>
