@@ -36,7 +36,12 @@
                     </button>
                 </div>
             </div>
-            <button v-if="bookboo" @click="showImages" class="btn btn-primary btn-block m-t-16">구역 사진 (클릭 시 확대)</button>
+            <div
+                v-if="bookboo"
+                class="flex-row m-t-16">
+                <button @click="showImages" class="btn btn-primary btn-block">구역사진</button>
+                <button @click="openModalBadGuys" class="btn btn-primary btn-block m-l-16">성범죄자</button>
+            </div>
         </div>
 
         <transition-group name="list-complete" tag="div" class="service-cards">
@@ -194,6 +199,25 @@ export default {
             this.$modal.images({
                 images,
                 openTab: true,
+            })
+        },
+        openModalBadGuys() {
+            this.$modal.basic({
+                title: '성범죄자 주소',
+                body: this.$translate(`
+                경기도 성남시 수정구 탄리로13번길 5-1
+                => 93-(2)
+
+                경기도 성남시 수정구 남문로4번길 13
+                => 27-(1)
+
+                경기도 성남시 수정구 제일로179번실 13
+                => 21-(1)
+
+                경기도 성남시 수정구 수정남로52번길 26
+                => 100-(6)
+                `),
+                buttons: [{ label: 'CONFIRM', class: 'btn-primary' }],
             })
         },
         onKeyword(keyword) {

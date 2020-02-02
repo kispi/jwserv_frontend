@@ -15,12 +15,14 @@
 </template>
 
 <script>
+import ModalBasic from '@/components/modals/ModalBasic';
 import ModalImages from '@/components/modals/ModalImages';
 import ModalInput from '@/components/modals/ModalInput';
 
 export default {
     name: 'Modal',
     components: {
+        ModalBasic,
         ModalImages,
         ModalInput,
     },
